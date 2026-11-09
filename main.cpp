@@ -65,8 +65,8 @@ int main(){
 
      int opcion, opcionproducto, opcionventas;
      Product inventory [2]{
-       {1,"frijoles", 1,4,5,8},
-     {2,"tortillas", 2,5,7,12}
+       {1,"frijoles", 1.50,20,5,17},
+     {2,"tortillas", 0.50,24,5,24}
      };
 
 //Menu - Victor
