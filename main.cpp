@@ -53,7 +53,7 @@ void showInventory(Product inventory[], int numProducts){
 }
 
 void reviewStock(Product inventory[], int numProducts){
-    
+
 }
 
 //Main structure of the system
@@ -76,9 +76,9 @@ int main(){
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
         cout <<"1.Productos" << endl;
-        cout <<"2.Ventas." << endl;
+        cout <<"2.Ventas" << endl;
         cout <<"3.Ayuda" << endl;
-        cout <<"4.Cerrar sesion." << endl;
+        cout <<"4.Cerrar sesion" << endl;
         cout <<"Ingrese una opcion:" << endl;
         cin >> option;
 
@@ -87,11 +87,11 @@ int main(){
             case 1:
                 do{        
                     cout <<"=====Producto=====" << endl;
-                    cout <<"1.Registrar Producto." << endl;
-                    cout <<"2.Ver Inventario." << endl;
-                    cout <<"3.Ver Simulador De Dias De Inventario" << endl;
-                    cout <<"4.Revisar Stock." << endl;
-                    cout <<"5.Volver Al Menu Principal." << endl;
+                    cout <<"1.Registrar producto" << endl;
+                    cout <<"2.Ver inventario" << endl;
+                    cout <<"3.Ver simulador de dias de inventario" << endl;
+                    cout <<"4.Revisar stock" << endl;
+                    cout <<"5.Volver al menu principal" << endl;
                     cout <<"Ingrese una opcion:" << endl;
                     cin >> optionProduct;
 
@@ -115,9 +115,9 @@ int main(){
             case 2:
                 do{
                     cout <<"=====Ventas=====" << endl;
-                    cout <<"1.Realizar ventas." << endl;
-                    cout <<"2.Ver inventario." << endl;
-                    cout <<"3.Volver al menu principal." << endl;
+                    cout <<"1.Realizar ventas" << endl;
+                    cout <<"2.Ver inventario" << endl;
+                    cout <<"3.Volver al menu principal" << endl;
                     cout <<"Ingrese una opcion:" << endl;
                     cin >> optionSales;
 
@@ -137,22 +137,22 @@ int main(){
                 cout <<"=======================================================================================" << endl;
                 cout <<"Producto: Al ingresar hacia el apartado producto podra" << endl;
                 cout <<"encontrar 5 opciones que son: " << endl;
-                cout <<"1. Registrar Inventario (Sirve para registrar los productos en el sistema)." << endl;
+                cout <<"1. Registrar Inventario (Sirve para registrar los productos en el sistema)" << endl;
                 cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
                 cout <<"sobre los productso que estan en el inventario)." << endl;
                 cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
                 cout <<"el stock del producto)." << endl;
-                cout <<"4.Revisar Stock (Permite al usuario revisar el stock de cada producto)." << endl;
-                cout <<"5.Volver Al Menu Principal (Regresa al menu principal)." << endl;
+                cout <<"4.Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
+                cout <<"5.Volver al menu principal (Regresa al menu principal)." << endl;
                 cout <<"=======================================================================================" << endl;
                 cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
                 cout <<"encontrar 3 opciones que son: " << endl;
-                cout <<"1.Realizar ventas (Permite al usuario realizar venta de productos)." << endl;
+                cout <<"1.Realizar ventas (Permite al usuario realizar venta de productos)" << endl;
                 cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
                 cout <<"sobre los productso que estan en el inventario)" << endl;
-                cout <<"3. Volver Al Menu Principal (Regresa al menu principal)." << endl;
+                cout <<"3. Volver Al Menu Principal (Regresa al menu principal)" << endl;
                 cout <<"=======================================================================================" << endl;
-                cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno." << endl;
+                cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
                 break;
 
             case 4:
@@ -165,7 +165,3 @@ int main(){
     }while(option !=4);
     return 0;
 }
-
-
-
-   
