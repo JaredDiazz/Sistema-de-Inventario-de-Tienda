@@ -45,7 +45,7 @@ void salesSimulator(Product inventory[], int numProducts){
 int registerProduct(Product inventory[], int numProducts){
     return numProducts;
 }
-void makeSale(Product inventory[], int numProdcuts){
+void makeSale(Product inventory[], int numProducts){
     
 }
 void showInventory(Product inventory[], int numProducts){
@@ -83,9 +83,8 @@ int main(){
         cin >> option;
 
         switch (option){
-      
             case 1:
-                do{        
+                do{
                     cout <<"=====Producto=====" << endl;
                     cout <<"1.Registrar producto" << endl;
                     cout <<"2.Ver inventario" << endl;
@@ -94,7 +93,6 @@ int main(){
                     cout <<"5.Volver al menu principal" << endl;
                     cout <<"Ingrese una opcion:" << endl;
                     cin >> optionProduct;
-
                     switch (optionProduct){
                         case 1:
                             numProducts = registerProduct(inventory, numProducts);
@@ -111,7 +109,6 @@ int main(){
                     }
                 }while(optionProduct !=5);
                 break;
-
             case 2:
                 do{
                     cout <<"=====Ventas=====" << endl;
@@ -131,7 +128,6 @@ int main(){
                     }
                 }while(optionSales !=3);
                 break;
-
             case 3:
                 cout <<"=========================================AYUDA========================================="<< endl;
                 cout <<"=======================================================================================" << endl;
@@ -154,11 +150,9 @@ int main(){
                 cout <<"=======================================================================================" << endl;
                 cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
                 break;
-
             case 4:
                 cout <<"Cerrando sesion..." << endl;
                 break;
-            
             default: 
                 cout <<"Ingrese opcion valida." << endl;
         }
