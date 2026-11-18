@@ -12,7 +12,7 @@ struct User{
 
 //Structure for the products
 struct Product{
-    int idProducto;
+    int idProduct;
     string product;
     float price;
     int stock;
@@ -83,7 +83,7 @@ int registerProduct(Product inventory[], int numProducts){
         }
     } while (minimumStock < 0);
 
-    inventory[numProducts].idProducto = numProducts + 1;
+    inventory[numProducts].idProduct = numProducts + 1;
     inventory[numProducts].product = name;
     inventory[numProducts].price = price;
     inventory[numProducts].stock = stock;
@@ -96,8 +96,25 @@ int registerProduct(Product inventory[], int numProducts){
 void makeSale(Product inventory[], int numProducts){
     
 }
-void showInventory(Product inventory[], int numProducts){
 
+void showInventory(Product inventory[], int numProducts){
+    cout << "=====INVENTARIO=====" << endl;
+
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
+    
+    for( int i = 0; i < numProducts; i++){
+        cout << "ID: " << inventory[i].idProduct << endl;
+        cout << "Producto: " << inventory[i].product << endl;
+        cout << "Precio: " << inventory[i].price << endl;
+        cout << "Stock: " << inventory[i].stock << endl;
+        cout << "Stock minimo: " << inventory[i].minimumStock << endl;
+        cout << "Ventas Totales: " << inventory[i].totalSales << endl;
+        cout << "====================" << endl;
+    }
 }
 
 void reviewStock(Product inventory[], int numProducts){
