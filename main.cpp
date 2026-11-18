@@ -43,8 +43,56 @@ void salesSimulator(Product inventory[], int numProducts){
 
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
-    return numProducts;
+    if (numProducts >= 100) {
+        cout << "El inventario esta lleno" << endl;
+        return numProducts;
+    }
+
+    string name;
+    float price;
+    int stock, minimumStock;
+
+    cout << "=====Registrar producto=====" << endl;
+    cout << "Nombre: ";
+    cin >> name;
+
+    do{
+        cout << "Precio: ";
+        cin >> price;
+        if (price <= 0){
+            cout << "El precio debe ser mayor a 0" << endl;
+        }
+    }while (price <= 0);
+
+    do{
+        cout << "Stock inicial: ";
+        cin >> stock;
+        if (stock < 0)
+        {
+            cout << "El stock no puede ser negativo" << endl;
+        }
+    }while(stock < 0);
+
+    do
+    {
+        cout << "Stock minimo: ";
+        cin >> minimumStock;
+        if (minimumStock < 0)
+        {
+            cout << "El stock minimo no puede ser negativo" << endl;
+        }
+    } while (minimumStock < 0);
+
+    inventory[numProducts].idProducto = numProducts + 1;
+    inventory[numProducts].product = name;
+    inventory[numProducts].price = price;
+    inventory[numProducts].stock = stock;
+    inventory[numProducts].minimumStock = minimumStock;
+    inventory[numProducts].totalSales = 0;
+    cout << "Producto registrado exitosamente!" << endl;
+    return numProducts + 1;
 }
+
 void makeSale(Product inventory[], int numProducts){
     
 }
