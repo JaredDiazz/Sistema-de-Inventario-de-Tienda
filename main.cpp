@@ -118,7 +118,30 @@ void showInventory(Product inventory[], int numProducts){
 }
 
 void reviewStock(Product inventory[], int numProducts){
+    cout << "=====REVISION DE STOCK=====" << endl;
 
+    if (numProducts == 0){
+        cout << "NO HAY PRODUCTO REGISTRADOS" << endl;
+        return;
+    }
+
+    int alert = 0;
+
+    for (int i = 0; i < numProducts; i++){
+        if (inventory[i].stock == 0){
+            cout << "PRODUCTO AGOTADO: " << inventory[i].product << endl;
+            alert++;
+        } else if (inventory[i].stock <= inventory[i].minimumStock)
+        {
+            cout << "ALERTA: " << inventory[i].product << " tiene " << inventory[i].stock << " unidades (minimo de unidades: " << inventory[i].minimumStock << ")" << endl;
+            alert++;
+        }
+    }
+    
+    if (alert == 0)
+    {
+        cout << "Todos los productos cuentan con suficiente stock" << endl;
+    }
 }
 
 //Main structure of the system
