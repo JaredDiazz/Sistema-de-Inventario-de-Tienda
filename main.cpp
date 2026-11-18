@@ -94,7 +94,58 @@ int registerProduct(Product inventory[], int numProducts){
 }
 
 void makeSale(Product inventory[], int numProducts){
+    if  (numProducts == 0)
+    {
+        cout << "No hay productos para vender" << endl;
+        return;
+    }
+
+    int id, ix, quantity;
+
+    cout << "=====REALIZAR VENTA=====" << endl;
+    for (int i = 0; i < numProducts; i++)
+    {
+        cout << inventory[i].idProduct << " " << inventory[i].product << " $" << inventory[i].price << " Stock: " << inventory[i].stock << endl;
+    }
     
+    do
+    {
+        cout << "ID: ";
+        cin >> id;
+        if (id < 1 || id > numProducts)
+        {
+            cout << "ID incorrecto" << endl;
+        }
+    } while (id < 1 || id > numProducts);
+    
+    ix = id - 1;
+
+    do
+    {
+        cout << "Cantidad: ";
+        cin >> quantity;
+        if (quantity <= 0)
+        {
+            cout << "La cantidad debe ser mayor a 0" << endl;
+        }
+    } while (quantity <= 0);
+    
+    if (quantity > inventory[ix].stock)
+    {
+        cout << "Stock insuficiente. Disponible: " << inventory[ix].stock << endl;
+        return;
+    }
+    
+    inventory[ix].stock = inventory[ix].stock - quantity;
+    inventory[ix].totalSales = inventory[ix].totalSales + quantity;
+
+    float total = quantity * inventory[ix].price;
+    cout << "Venta realizada. Total: $" << total << endl;
+
+    if (inventory[ix].stock <= inventory[ix].minimumStock)
+    {
+        cout << "ALERTA: Quedan " << inventory[ix].stock << "unidades de" << inventory[ix].product << " Cantidad minima: " << inventory[ix].minimumStock << endl; 
+    }
 }
 
 void showInventory(Product inventory[], int numProducts){
