@@ -21,21 +21,21 @@ struct Product{
 };
 
 //Simulator - Victor
-void salessimulator(Product inventory[], int numproducts){
-    for(int i = 0; i < numproducts; i++){
-        double daysales;
+void salesSimulator(Product inventory[], int numProducts){
+    for(int i = 0; i < numProducts; i++){
+        double daySales;
 
         cout <<"====================================================" << endl;
-        cout <<"ingrese el promedio diario de ventas de ese producto" << i+1 << ":" << endl;
-        cin >> daysales;
+        cout <<"Ingrese el promedio diario de ventas de ese producto " << i+1 << ": " << endl;
+        cin >> daySales;
 
-        if(daysales <= 0){
+        if(daySales <= 0){
             cout <<"Error el valor promedio tiene que ser mayor a 0" << endl;
             
         } else {
-            double days = (inventory[i].stock*1.0)/daysales;
+            double days = (inventory[i].stock*1.0)/daySales;
 
-        cout <<"queda " << days <<" Dias restantes de stock" << endl;
+        cout <<"Quedan " << days <<" dias restantes de stock" << endl;
 
         }
         cout <<"====================================================" << endl;
@@ -44,11 +44,10 @@ void salessimulator(Product inventory[], int numproducts){
 }
 
 //Inventory and sales - Jared
-void registerProduct();
-void makeSale();
-void showInventory();
-void reviewStock();
-
+int registerProduct(Product inventory[], int numProducts);
+void makeSale(Product inventory[], int numProdcuts);
+void showInventory(Product inventory[], int numProducts);
+void reviewStock(Product inventory[], int numProducts);
 
 //Global variables
 const int maxUsers = 5;
@@ -162,7 +161,6 @@ do{
         cout <<"Ingrese opcion valida." << endl;
     }
 }while(opcion !=4);
-
     return 0;
 }
 
