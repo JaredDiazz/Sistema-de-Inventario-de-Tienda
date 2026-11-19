@@ -18,14 +18,26 @@ struct Product{
     int stock;
     int minimumStock;
     int totalSales;
+    int yearExp;
+    int dayExp;
+    int monthExp;
 };
 
+
 //Simulator - Victor
-void salesSimulator(Product inventory[], int numProducts){
+void inventorySimulator(Product inventory[], int numProducts){
+
+
+    int actualMonth = 11;
+    int actualYear = 2026;
+    int actualDay = 18;
+
     for(int i = 0; i < numProducts; i++){
         double daySales;
 
         cout <<"====================================================" << endl;
+
+        cout <<"Porducto:" << inventory[i].product << endl;
         cout <<"Ingrese el promedio diario de ventas de ese producto " << i+1 << ": " << endl;
         cin >> daySales;
 
@@ -36,10 +48,38 @@ void salesSimulator(Product inventory[], int numProducts){
 
         cout <<"Quedan " << days <<" dias restantes de stock" << endl;
 
-        }
+        }  if(inventory[i].yearExp < actualYear || 
+            (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth) ||
+            (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth && inventory[i].dayExp < actualDay )) {
+             cout <<"[ALERTA] El producto ya ha caducado! RETIRAR DE INVENTARIO" << endl;
+            } else if(inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth && inventory[i].dayExp < actualDay <= (actualDay + 7)) {
+                cout <<"[ALERTA] El producto esta a menos de una semana de caducar! LIQUIDAR PRODUCTO" << endl;
+            } else {
+                cout <<"[ESTADO] El producto aun no caduca" << endl;
+            }
         cout <<"====================================================" << endl;
     }
 }
+
+void mostrarCreditos(){
+    cout <<"===================================================" << endl;
+    cout <<"---------------CREDITOS DEL PROYECTO---------------" << endl;
+    cout <<"===================================================" << endl;
+    cout <<"----------Sistema de Inventario de Tienda----------" << endl;
+    cout <<"===================================================" << endl;
+    cout <<"Integrantes:" << endl;
+    cout <<"Josse Jared Diaz Ramirez (carnet: 00082426)" << endl;
+    cout <<"Victor Alfredo Osorio Gutierrez (carnet: 00376826)" << endl;
+    cout <<"Henry Alberto Serrano Mejia (carnet: 00058426)" << endl;
+    cout << "Materia:      Fundamentos de Programacion" << endl;
+    cout << "Catedratico:  Ing. Elisa Aldana" << endl;
+    cout << "Ciclo 02 / Ano:  2026" << endl;
+    cout <<"===================================================" << endl;
+
+}
+
+
+
 
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
@@ -114,11 +154,10 @@ int main(){
     int numUsers = 0;
     int numProducts = 0;
     int currentUserRoles = 0;
+    int yearexp;
+    int dayexp;
+    int monthexp;
 
-    //Test products
-    inventory[0] = {1, "Frijoles", 1.50, 20, 5, 17};
-    inventory[1] = {2, "Tortillas", 0.50, 24, 5, 24};
-    numProducts = 2;
 
     //Menu - Victor
     do{
@@ -126,7 +165,8 @@ int main(){
         cout <<"1.Productos" << endl;
         cout <<"2.Ventas" << endl;
         cout <<"3.Ayuda" << endl;
-        cout <<"4.Cerrar sesion" << endl;
+        cout <<"4.Creditos" << endl;
+        cout <<"5.Cerrar Sesion" << endl;
         cout <<"Ingrese una opcion:" << endl;
         cin >> option;
 
@@ -149,7 +189,7 @@ int main(){
                             showInventory(inventory, numProducts);
                             break;
                         case 3:
-                            salesSimulator(inventory, numProducts);
+                            inventorySimulator(inventory, numProducts);
                             break;
                         case 4:
                             reviewStock(inventory, numProducts);
@@ -199,11 +239,15 @@ int main(){
                 cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
                 break;
             case 4:
+                mostrarCreditos();
+                break;
+
+             case 5:
                 cout <<"Cerrando sesion..." << endl;
                 break;
             default: 
                 cout <<"Ingrese opcion valida." << endl;
         }
-    }while(option !=4);
+    }while(option !=5);
     return 0;
 }
