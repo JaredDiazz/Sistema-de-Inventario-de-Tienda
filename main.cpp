@@ -37,7 +37,7 @@ void inventorySimulator(Product inventory[], int numProducts){
 
         cout <<"====================================================" << endl;
 
-        cout <<"Porducto:" << inventory[i].product << endl;
+        cout <<"Producto:" << inventory[i].product << endl;
         cout <<"Ingrese el promedio diario de ventas de ese producto " << i+1 << ": " << endl;
         cin >> daySales;
 
@@ -50,9 +50,9 @@ void inventorySimulator(Product inventory[], int numProducts){
 
         }  if(inventory[i].yearExp < actualYear || 
             (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth) ||
-            (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth && inventory[i].dayExp < actualDay )) {
+            (inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp < actualDay )) {
              cout <<"[ALERTA] El producto ya ha caducado! RETIRAR DE INVENTARIO" << endl;
-            } else if(inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth && inventory[i].dayExp < actualDay <= (actualDay + 7)) {
+            } else if(inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp >=  actualDay && inventory[i].dayExp <= (actualDay + 7)) {
                 cout <<"[ALERTA] El producto esta a menos de una semana de caducar! LIQUIDAR PRODUCTO" << endl;
             } else {
                 cout <<"[ESTADO] El producto aun no caduca" << endl;
