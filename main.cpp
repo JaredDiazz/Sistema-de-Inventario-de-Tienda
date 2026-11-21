@@ -75,6 +75,31 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
 
     archivo.close();
 }
+// Solicita los datos de un nuevo usuario y lo agrega al arreglo.
+void registrarUsuario(user newUser[], int &totalusuarios) {
+    if (totalusuarios >= 5) {
+        cout << "Limite de usuarios alcanzado." << endl;
+        return;
+    }
+
+    newUser[totalusuarios].iduser = totalusuarios + 1;
+
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> newUser[totalusuarios].username;
+    cout << "Ingrese la contrasena: ";
+    cin >> newUser[totalusuarios].password;
+    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): ";
+    cin >> newUser[totalusuarios].rol;
+
+    if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
+        cout << "Rol no valido." << endl;
+        return;
+    }
+
+    totalusuarios++;
+    guardarUsuarios(newUser, totalusuarios);
+    cout << "Usuario registrado exitosamente." << endl;
+}
 
 
 //Simulator - Victor
