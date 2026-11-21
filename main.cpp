@@ -101,6 +101,44 @@ void registrarUsuario(user newUser[], int &totalusuarios) {
     cout << "Usuario registrado exitosamente." << endl;
 }
 
+// Busca un usuario por nombre y elimina su registro del arreglo.
+void eliminarUsuario(user newUser[], int &totalusuarios) {
+    string nombreEliminar;
+    int posicion = -1;
+
+    cout << "Ingrese el usuario a eliminar: ";
+    cin >> nombreEliminar;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        if (newUser[i].username == nombreEliminar) {
+            posicion = i;
+            break;
+        }
+    }
+
+    if (posicion == -1) {
+        cout << "Usuario no encontrado." << endl;
+        return;
+    }
+
+    if (posicion == 0) {
+        cout << "No se puede eliminar el usuario inicial." << endl;
+        return;
+    }
+
+    for (int i = posicion; i < totalusuarios - 1; i++) {
+        newUser[i] = newUser[i + 1];
+    }
+
+    totalusuarios--;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        newUser[i].iduser = i + 1;
+    }
+
+    guardarUsuarios(newUser, totalusuarios);
+    cout << "Usuario eliminado exitosamente." << endl;
+}
 
 //Simulator - Victor
 void inventorySimulator(Product inventory[], int numProducts){
