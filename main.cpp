@@ -23,6 +23,28 @@ struct Product{
     int dayExp;
     int monthExp;
 };
+//Henry funcion para guardar usuarios.
+// Guarda todos los usuarios dentro del archivo usuarios.txt.
+void guardarUsuarios(user newUser[], int totalusuarios) {
+    ofstream archivo("usuarios.txt");
+
+    if (!archivo.is_open()) {
+        cout << "No se pudo guardar el archivo de usuarios." << endl;
+        return;
+    }
+
+    archivo << totalusuarios << endl;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        archivo << newUser[i].iduser << endl;
+        archivo << newUser[i].username << endl;
+        archivo << newUser[i].password << endl;
+        archivo << newUser[i].rol << endl;
+    }
+
+    archivo.close();
+}
+
 
 
 //Simulator - Victor
