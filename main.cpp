@@ -140,6 +140,17 @@ void eliminarUsuario(user newUser[], int &totalusuarios) {
     cout << "Usuario eliminado exitosamente." << endl;
 }
 
+// Recorre el arreglo y muestra todos los usuarios registrados.
+void verUsuarios(user newUser[], int totalusuarios) {
+    cout << "Lista de usuarios registrados:" << endl;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        cout << "ID: " << newUser[i].iduser
+             << ", Nombre: " << newUser[i].username
+             << ", Rol: " << newUser[i].rol << endl;
+    }
+}
+
 //Simulator - Victor
 void inventorySimulator(Product inventory[], int numProducts){
 
