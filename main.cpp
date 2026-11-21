@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 //Structure for the users
-struct User{
-    int idUser;
+struct user{
+    int iduser;
     string username;
     string password;
     int rol;
@@ -149,11 +150,11 @@ int main(){
     int option, optionProduct, optionSales;
 
     //Variables(No globals)
-    User users[4];
+    user users[4];
     Product inventory[100];
-    int numUsers = 0;
+    int numusers = 0;
     int numProducts = 0;
-    int currentUserRoles = 0;
+    int currentuserRoles = 0;
     int yearexp;
     int dayexp;
     int monthexp;
