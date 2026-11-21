@@ -45,6 +45,36 @@ void guardarUsuarios(user newUser[], int totalusuarios) {
     archivo.close();
 }
 
+// Carga los usuarios desde el archivo cada vez que inicia el programa.
+void cargarUsuarios(user newUser[], int &totalusuarios) {
+    ifstream archivo("usuarios.txt");
+
+    if (!archivo.is_open()) {
+        newUser[0] = {1, "Henry", "1325", 1};
+        totalusuarios = 1;
+        guardarUsuarios(newUser, totalusuarios);
+        return;
+    }
+
+    archivo >> totalusuarios;
+
+    if (totalusuarios < 1) {
+        totalusuarios = 1;
+        newUser[0] = {1, "Henry", "1325", 1};
+        archivo.close();
+        guardarUsuarios(newUser, totalusuarios);
+        return;
+    }
+
+    for (int i = 0; i < totalusuarios; i++) {
+        archivo >> newUser[i].iduser;
+        archivo >> newUser[i].username;
+        archivo >> newUser[i].password;
+        archivo >> newUser[i].rol;
+    }
+
+    archivo.close();
+}
 
 
 //Simulator - Victor
