@@ -87,11 +87,11 @@ void registrarUsuario(user newUser[], int &totalusuarios) {
 
     newUser[totalusuarios].iduser = totalusuarios + 1;
 
-    cout << "Ingrese el nombre de usuario: "; << endl;
+    cout << "Ingrese el nombre de usuario: " << endl;
     cin >> newUser[totalusuarios].username;
-    cout << "Ingrese la contrasena: "; << endl;
+    cout << "Ingrese la contrasena: " << endl;
     cin >> newUser[totalusuarios].password;
-    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): "; << endl;
+    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): " << endl;
     cin >> newUser[totalusuarios].rol;
 
     if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
