@@ -77,6 +77,7 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
 
     archivo.close();
 }
+
 // Solicita los datos de un nuevo usuario y lo agrega al arreglo.
 // Valida que el rol sea 1 (administrador) o 2 (vendedor) y persiste el cambio en archivo.
 void registrarUsuario(user newUser[], int &totalusuarios) {
@@ -210,9 +211,6 @@ void mostrarCreditos(){
 
 }
 
-
-
-
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
     if (numProducts >= 100) {
@@ -223,6 +221,7 @@ int registerProduct(Product inventory[], int numProducts){
     string name;
     float price;
     int stock, minimumStock;
+    int dayExp, monthExp, yearExp;
 
     cout << "=====Registrar producto=====" << endl;
     cout << "Nombre: ";
@@ -245,8 +244,7 @@ int registerProduct(Product inventory[], int numProducts){
         }
     }while(stock < 0);
 
-    do
-    {
+    do{
         cout << "Stock minimo: ";
         cin >> minimumStock;
         if (minimumStock < 0)
@@ -255,12 +253,43 @@ int registerProduct(Product inventory[], int numProducts){
         }
     } while (minimumStock < 0);
 
+    do{
+        cout << "Dia de caducidad: ";
+        cin >> dayExp;
+        if (dayExp < 1 || dayExp > 31)
+        {
+            cout << "Dia invalido" << endl;
+        } 
+    } while (dayExp < 1 || dayExp > 31);
+    
+    do{
+        cout << "Mes de caducidad: ";
+        cin >> monthExp;
+        if (monthExp < 1 || monthExp > 12);
+        {
+            cout << "Mes invalido" << endl;
+        }
+    } while (monthExp < 1 || monthExp > 12);
+
+    do{
+        cout << "Anio de caducidad: ";
+        cin >> yearExp;
+        if (yearExp < 2026)
+        {
+            cout << "Anio invalido" << endl;
+        }
+    } while (yearExp < 2026);
+
     inventory[numProducts].idProduct = numProducts + 1;
     inventory[numProducts].product = name;
     inventory[numProducts].price = price;
     inventory[numProducts].stock = stock;
     inventory[numProducts].minimumStock = minimumStock;
     inventory[numProducts].totalSales = 0;
+    inventory[numProducts].dayExp = dayExp;
+    inventory[numProducts].monthExp = monthExp;
+    inventory[numProducts].yearExp = yearExp;
+
     cout << "Producto registrado exitosamente!" << endl;
     return numProducts + 1;
 }
