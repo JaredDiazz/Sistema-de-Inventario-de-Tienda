@@ -78,6 +78,7 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
     archivo.close();
 }
 // Solicita los datos de un nuevo usuario y lo agrega al arreglo.
+// Valida que el rol sea 1 (administrador) o 2 (vendedor) y persiste el cambio en archivo.
 void registrarUsuario(user newUser[], int &totalusuarios) {
     if (totalusuarios >= 5) {
         cout << "Limite de usuarios alcanzado." << endl;
@@ -104,6 +105,7 @@ void registrarUsuario(user newUser[], int &totalusuarios) {
 }
 
 // Busca un usuario por nombre y elimina su registro del arreglo.
+// Restantes reasignando sus IDs antes de actualizar totalusuarios y guardar en archivo.
 void eliminarUsuario(user newUser[], int &totalusuarios) {
     string nombreEliminar;
     int posicion = -1;
@@ -143,6 +145,7 @@ void eliminarUsuario(user newUser[], int &totalusuarios) {
 }
 
 // Recorre el arreglo y muestra todos los usuarios registrados.
+//Junto con su ID, nombre de usuario y rol asignado.
 void verUsuarios(user newUser[], int totalusuarios) {
     cout << "Lista de usuarios registrados:" << endl;
 
