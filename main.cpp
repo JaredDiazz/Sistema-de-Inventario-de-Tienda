@@ -345,7 +345,7 @@ void makeSale(Product inventory[], int numProducts){
 
     if (inventory[ix].stock <= inventory[ix].minimumStock)
     {
-        cout << "ALERTA: Quedan " << inventory[ix].stock << "unidades de" << inventory[ix].product << " Cantidad minima: " << inventory[ix].minimumStock << endl; 
+        cout << "ALERTA: Quedan " << inventory[ix].stock << " unidades de " << inventory[ix].product << " (minimo: " << inventory[ix].minimumStock << ")" << endl; 
     }
 }
 
