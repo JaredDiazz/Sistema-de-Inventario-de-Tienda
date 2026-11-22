@@ -197,6 +197,8 @@ int main(){
                     }
                 }while(optionProduct !=5);
                 break;
+
+                //sell menu
             case 2:
                 do{
                     cout <<"=====Ventas=====" << endl;
