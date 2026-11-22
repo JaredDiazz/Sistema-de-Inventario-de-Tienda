@@ -25,6 +25,7 @@ struct Product{
 };
 //Henry funcion para guardar usuarios.
 // Guarda todos los usuarios dentro del archivo usuarios.txt.
+// Recibe el arreglo de usuarios y la cantidad actual de registros validos.
 void guardarUsuarios(user newUser[], int totalusuarios) {
     ofstream archivo("usuarios.txt");
 
@@ -46,6 +47,7 @@ void guardarUsuarios(user newUser[], int totalusuarios) {
 }
 
 // Carga los usuarios desde el archivo cada vez que inicia el programa.
+//si el archivo no existe o esta vacio, inicializa el usuario base y lo guarda.
 void cargarUsuarios(user newUser[], int &totalusuarios) {
     ifstream archivo("usuarios.txt");
 
