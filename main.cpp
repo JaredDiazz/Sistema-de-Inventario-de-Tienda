@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 //Structure for the users
-struct User{
-    int idUser;
+struct user{
+    int iduser;
     string username;
     string password;
     int rol;
@@ -22,7 +23,138 @@ struct Product{
     int dayExp;
     int monthExp;
 };
+//Henry funcion para guardar usuarios.
+// Guarda todos los usuarios dentro del archivo usuarios.txt.
+// Recibe el arreglo de usuarios y la cantidad actual de registros validos.
+void guardarUsuarios(user newUser[], int totalusuarios) {
+    ofstream archivo("usuarios.txt");
 
+    if (!archivo.is_open()) {
+        cout << "No se pudo guardar el archivo de usuarios." << endl;
+        return;
+    }
+
+    archivo << totalusuarios << endl;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        archivo << newUser[i].iduser << endl;
+        archivo << newUser[i].username << endl;
+        archivo << newUser[i].password << endl;
+        archivo << newUser[i].rol << endl;
+    }
+
+    archivo.close();
+}
+
+// Carga los usuarios desde el archivo cada vez que inicia el programa.
+//si el archivo no existe o esta vacio, inicializa el usuario base y lo guarda.
+void cargarUsuarios(user newUser[], int &totalusuarios) {
+    ifstream archivo("usuarios.txt");
+
+    if (!archivo.is_open()) {
+        newUser[0] = {1, "Henry", "1325", 1};
+        totalusuarios = 1;
+        guardarUsuarios(newUser, totalusuarios);
+        return;
+    }
+
+    archivo >> totalusuarios;
+
+    if (totalusuarios < 1) {
+        totalusuarios = 1;
+        newUser[0] = {1, "Henry", "1325", 1};
+        archivo.close();
+        guardarUsuarios(newUser, totalusuarios);
+        return;
+    }
+
+    for (int i = 0; i < totalusuarios; i++) {
+        archivo >> newUser[i].iduser;
+        archivo >> newUser[i].username;
+        archivo >> newUser[i].password;
+        archivo >> newUser[i].rol;
+    }
+
+    archivo.close();
+}
+// Solicita los datos de un nuevo usuario y lo agrega al arreglo.
+// Valida que el rol sea 1 (administrador) o 2 (vendedor) y persiste el cambio en archivo.
+void registrarUsuario(user newUser[], int &totalusuarios) {
+    if (totalusuarios >= 5) {
+        cout << "Limite de usuarios alcanzado." << endl;
+        return;
+    }
+
+    newUser[totalusuarios].iduser = totalusuarios + 1;
+
+    cout << "Ingrese el nombre de usuario: "; << endl;
+    cin >> newUser[totalusuarios].username;
+    cout << "Ingrese la contrasena: "; << endl;
+    cin >> newUser[totalusuarios].password;
+    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): "; << endl;
+    cin >> newUser[totalusuarios].rol;
+
+    if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
+        cout << "Rol no valido." << endl;
+        return;
+    }
+
+    totalusuarios++;
+    guardarUsuarios(newUser, totalusuarios);
+    cout << "Usuario registrado exitosamente." << endl;
+}
+
+// Busca un usuario por nombre y elimina su registro del arreglo.
+// Restantes reasignando sus IDs antes de actualizar totalusuarios y guardar en archivo.
+void eliminarUsuario(user newUser[], int &totalusuarios) {
+    string nombreEliminar;
+    int posicion = -1;
+
+    cout << "Ingrese el usuario a eliminar: ";
+    cin >> nombreEliminar;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        if (newUser[i].username == nombreEliminar) {
+            posicion = i;
+            break;
+        }
+    }
+
+    if (posicion == -1) {
+        cout << "Usuario no encontrado." << endl;
+        return;
+    }
+
+    if (posicion == 0) {
+        cout << "No se puede eliminar el usuario inicial." << endl;
+        return;
+    }
+
+    for (int i = posicion; i < totalusuarios - 1; i++) {
+        newUser[i] = newUser[i + 1];
+    }
+
+    totalusuarios--;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        newUser[i].iduser = i + 1;
+    }
+
+    guardarUsuarios(newUser, totalusuarios);
+    cout << "Usuario eliminado exitosamente." << endl;
+}
+
+// Recorre el arreglo y muestra todos los usuarios registrados.
+//Junto con su ID, nombre de usuario y rol asignado.
+void verUsuarios(user newUser[], int totalusuarios) {
+    cout << "Lista de usuarios registrados:" << endl;
+
+    for (int i = 0; i < totalusuarios; i++) {
+        cout << "ID: " << newUser[i].iduser
+             << ", Nombre: " << newUser[i].username
+             << ", Rol: " << newUser[i].rol << endl;
+    }
+}
 
 //Simulator - Victor
 void inventorySimulator(Product inventory[], int numProducts){
@@ -149,29 +281,66 @@ int main(){
     int option, optionProduct, optionSales;
 
     //Variables(No globals)
-    User users[4];
+    user users[5];
+    int posicionUsuario = -1;
     Product inventory[100];
-    int numUsers = 0;
+    int numusers = 0;
+    cargarUsuarios(users, numusers);
     int numProducts = 0;
-    int currentUserRoles = 0;
+    int currentuserroles = 0;
     int yearexp;
     int dayexp;
     int monthexp;
 
+    user enteredUser;
+    cout << "Ingrese su nombre de usuario: ";
+    cin >> enteredUser.username;
+    cout << "Ingrese su contrasena: ";
+    cin >> enteredUser.password;
+
+    for (int i=0; i < numusers; i++){
+    
+        if (enteredUser.username == users[i].username && enteredUser.password == users[i].password){
+            posicionUsuario = i;
+        break;
+        }
+    }
+    if (posicionUsuario == -1){
+        cout << "Usuario o contrasena incorrectos" << endl;
+        return 1;
+    }
+
+    currentuserroles = users[posicionUsuario].rol;
+    cout << "Acceso concedido." << endl;
+    cout << "ID de usuario: " << users[posicionUsuario].iduser << endl;
+    cout << "Nombre de usuario: " << users[posicionUsuario].username << endl;
 
     //Menu - Victor
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
-        cout <<"1.Productos" << endl;
+        if (currentuserroles == 1){
+            cout <<"1.Productos" << endl;
+        }
         cout <<"2.Ventas" << endl;
         cout <<"3.Ayuda" << endl;
         cout <<"4.Creditos" << endl;
         cout <<"5.Cerrar Sesion" << endl;
+        if (currentuserroles == 1) {
+            cout << "6.Registrar Usuario" << endl;
+            cout << "7. Eliminar usuario" << endl;
+            cout << "8. Ver usuarios" << endl;
+        }else if (currentuserroles == 2) {
+            cout << "6. Ver usuarios" << endl;
+        } else {
+            cout << "Error: rol de usuario no valido." << endl;
+            return 1;
+        }
         cout <<"Ingrese una opcion:" << endl;
         cin >> option;
 
         switch (option){
             case 1:
+            if (currentuserroles == 1){
                 do{
                     cout <<"=====Producto=====" << endl;
                     cout <<"1.Registrar producto" << endl;
@@ -196,6 +365,9 @@ int main(){
                             break;
                     }
                 }while(optionProduct !=5);
+                }else {
+                cout <<"acceso denegado: solo para administradores." << endl;
+                }
                 break;
             case 2:
                 do{
@@ -242,8 +414,31 @@ int main(){
                 mostrarCreditos();
                 break;
 
-             case 5:
+            case 5:
                 cout <<"Cerrando sesion..." << endl;
+                break;
+            case 6 :
+             if (currentuserroles == 1){
+                registrarUsuario(users, numusers);
+                }else if (currentuserroles == 2){
+                    verUsuarios(users, numusers);
+                }else {
+                cout << "Ingrese opcion valida." << endl;
+                }
+                break;
+            case 7 :
+                if (currentuserroles == 1){
+                    eliminarUsuario(users,numusers);
+                } else {
+                    cout << "Ingrese opcion valida." << endl;
+                }
+                break;
+            case 8 :
+                if (currentuserroles == 1){
+                    verUsuarios(users,numusers);
+                } else {
+                cout << "Ingrese opcion valida." << endl;
+                }
                 break;
             default: 
                 cout <<"Ingrese opcion valida." << endl;
