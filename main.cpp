@@ -276,15 +276,39 @@ int main(){
     int option, optionProduct, optionSales;
 
     //Variables(No globals)
-    user users[4];
+    user users[5];
+    int posicionUsuario = -1;
     Product inventory[100];
     int numusers = 0;
+    cargarUsuarios(users, numusers);
     int numProducts = 0;
-    int currentuserRoles = 0;
+    int currentuserroles = 0;
     int yearexp;
     int dayexp;
     int monthexp;
 
+    user enteredUser;
+    cout << "Ingrese su nombre de usuario: ";
+    cin >> enteredUser.username;
+    cout << "Ingrese su contrasena: ";
+    cin >> enteredUser.password;
+
+    for (int i=0; i < numusers; i++){
+    
+        if (enteredUser.username == users[i].username && enteredUser.password == users[i].password){
+            posicionUsuario = i;
+        break;
+        }
+    }
+    if (posicionUsuario == -1){
+        cout << "Usuario o contrasena incorrectos" << endl;
+        return 1;
+    }
+
+    currentuserroles = users[posicionUsuario].rol;
+    cout << "Acceso concedido." << endl;
+    cout << "ID de usuario: " << users[posicionUsuario].iduser << endl;
+    cout << "Nombre de usuario: " << users[posicionUsuario].username << endl;
 
     //Menu - Victor
     do{
