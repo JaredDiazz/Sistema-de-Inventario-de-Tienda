@@ -84,11 +84,11 @@ void registrarUsuario(user newUser[], int &totalusuarios) {
 
     newUser[totalusuarios].iduser = totalusuarios + 1;
 
-    cout << "Ingrese el nombre de usuario: ";
+    cout << "Ingrese el nombre de usuario: "; << endl;
     cin >> newUser[totalusuarios].username;
-    cout << "Ingrese la contrasena: ";
+    cout << "Ingrese la contrasena: "; << endl;
     cin >> newUser[totalusuarios].password;
-    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): ";
+    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): "; << endl;
     cin >> newUser[totalusuarios].rol;
 
     if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
@@ -313,16 +313,29 @@ int main(){
     //Menu - Victor
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
-        cout <<"1.Productos" << endl;
+        if (currentuserroles == 1){
+            cout <<"1.Productos" << endl;
+        }
         cout <<"2.Ventas" << endl;
         cout <<"3.Ayuda" << endl;
         cout <<"4.Creditos" << endl;
         cout <<"5.Cerrar Sesion" << endl;
+        if (currentuserroles == 1) {
+            cout << "6.Registrar Usuario" << endl;
+            cout << "7. Eliminar usuario" << endl;
+            cout << "8. Ver usuarios" << endl;
+        }else if (currentuserroles == 2) {
+            cout << "6. Ver usuarios" << endl;
+        } else {
+            cout << "Error: rol de usuario no valido." << endl;
+            return 1;
+        }
         cout <<"Ingrese una opcion:" << endl;
         cin >> option;
 
         switch (option){
             case 1:
+            if (currentuserroles == 1){
                 do{
                     cout <<"=====Producto=====" << endl;
                     cout <<"1.Registrar producto" << endl;
@@ -347,6 +360,9 @@ int main(){
                             break;
                     }
                 }while(optionProduct !=5);
+                }else {
+                cout <<"acceso denegado: solo para administradores." << endl;
+                }
                 break;
             case 2:
                 do{
@@ -393,8 +409,31 @@ int main(){
                 mostrarCreditos();
                 break;
 
-             case 5:
+            case 5:
                 cout <<"Cerrando sesion..." << endl;
+                break;
+            case 6 :
+             if (currentuserroles == 1){
+                registrarUsuario(users, numusers);
+                }else if (currentuserroles == 2){
+                    verUsuarios(users, numusers);
+                }else {
+                cout << "Ingrese opcion valida." << endl;
+                }
+                break;
+            case 7 :
+                if (currentuserroles == 1){
+                    eliminarUsuario(users,numusers);
+                } else {
+                    cout << "Ingrese opcion valida." << endl;
+                }
+                break;
+            case 8 :
+                if (currentuserroles == 1){
+                    verUsuarios(users,numusers);
+                } else {
+                cout << "Ingrese opcion valida." << endl;
+                }
                 break;
             default: 
                 cout <<"Ingrese opcion valida." << endl;
