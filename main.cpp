@@ -30,7 +30,7 @@ void inventorySimulator(Product inventory[], int numProducts){
 
     int actualMonth = 11;
     int actualYear = 2026;
-    int actualDay = 18;
+    int actualDay = 19;
 
     for(int i = 0; i < numProducts; i++){
         double daySales;
@@ -60,7 +60,7 @@ void inventorySimulator(Product inventory[], int numProducts){
         cout <<"====================================================" << endl;
     }
 }
-
+//credits - victor osorio
 void mostrarCreditos(){
     cout <<"===================================================" << endl;
     cout <<"---------------CREDITOS DEL PROYECTO---------------" << endl;
