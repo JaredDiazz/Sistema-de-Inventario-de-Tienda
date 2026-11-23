@@ -323,6 +323,78 @@ int loadProducts(Product inventory[]){
     return total;
 }
 
+int readInt(string message){
+    int value;
+    cout << message;
+    cin >> value; 
+
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Entrada invalida. " << message;
+        cin >> value;
+    }
+    return value;
+}
+
+float readFloat(string message){
+    float value;
+    cout << message;
+    cin >> value;
+
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Entrada invalida. " << message;
+        cin >> value;
+    }
+
+    return value;
+}
+
+int daysMonth(int month, int year){
+    if (month == 2){
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+            return 29;
+        }
+        return 28;
+    }
+
+    if (month == 4 || month == 6 || month == 9 || month == 11){
+        return 30;
+    }
+
+    return 31;
+}
+
+void askDate(int &day, int &month, int &year){
+    do{
+        month = readInt("Mes: ");
+        if (month < 1 || month > 12)
+        {
+            cout << "Mes invalido" << endl;
+        }
+    }while(month < 1 || month > 12);
+
+    do{
+        year = readInt("Anio: ");
+        if (year < 2026)
+        {
+            cout << "Anio invalido" << endl;
+        }
+    }while(year < 2026);
+
+    do{
+        day = readInt("Dia: ");
+        if (day < 1 || day > daysMonth(month, year))
+        {
+            cout << "Dia invalido para ese mes" << endl;
+        }
+    }while(day < 1 || day > daysMonth(month, year));
+}
+
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
     if (numProducts >= 100) {
