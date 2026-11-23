@@ -13,7 +13,7 @@ struct user{
 
 //Structure for the products
 struct Product{
-    int idProducto;
+    int idProduct;
     string product;
     float price;
     int stock;
@@ -77,30 +77,48 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
 
     archivo.close();
 }
+
 // Solicita los datos de un nuevo usuario y lo agrega al arreglo.
 // Valida que el rol sea 1 (administrador) o 2 (vendedor) y persiste el cambio en archivo.
-void registrarUsuario(user newUser[], int &totalusuarios) {
-    if (totalusuarios >= 5) {
+void registerUser(user newUser[], int &totalUsers) {
+    if (totalUsers >= 5) {
         cout << "Limite de usuarios alcanzado." << endl;
         return;
     }
 
-    newUser[totalusuarios].iduser = totalusuarios + 1;
+    string username, password;
+    int rol;
 
-    cout << "Ingrese el nombre de usuario: "; << endl;
-    cin >> newUser[totalusuarios].username;
-    cout << "Ingrese la contrasena: "; << endl;
-    cin >> newUser[totalusuarios].password;
-    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): "; << endl;
-    cin >> newUser[totalusuarios].rol;
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> username;
 
-    if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
-        cout << "Rol no valido." << endl;
+    for (int i = 0; i < totalUsers; i++)
+    {
+        if (newUser[i].username == username)
+        {
+            cout << "Ese nombre de usuario ya esta en uso." << endl;
+            return;
+        }
+    }
+    
+    cout << "Ingrese la contraseña: ";
+    cin >> password;
+    cout << "Ingrese el rol (1 = Admin, 2 = Vendedor): ";
+    cin >> rol;
+
+    if (rol != 1 && rol != 2)
+    {
+        cout << "Rol invalido." << endl;
         return;
     }
+    
+    newUser[totalUsers].iduser = totalUsers + 1;
+    newUser[totalUsers].username = username;
+    newUser[totalUsers].password = password;
+    newUser[totalUsers].rol = rol;
 
-    totalusuarios++;
-    guardarUsuarios(newUser, totalusuarios);
+    totalUsers++;
+    guardarUsuarios(newUser, totalUsers);
     cout << "Usuario registrado exitosamente." << endl;
 }
 
@@ -158,37 +176,72 @@ void verUsuarios(user newUser[], int totalusuarios) {
 
 //Simulator - Victor
 void inventorySimulator(Product inventory[], int numProducts){
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
 
+    int actualDay, actualMonth, actualYear;
+    cout << "Ingrese la fecha de hoy" << endl;
 
-    int actualMonth = 11;
-    int actualYear = 2026;
-    int actualDay = 18;
+    do{
+        cout << "Dia: ";
+        cin >> actualDay;
+        if (actualDay < 1 || actualDay > 31)
+        {
+            cout << "Dia invalido" << endl;
+        }
+    }while(actualDay < 1 || actualDay > 31);
 
-    for(int i = 0; i < numProducts; i++){
+    do{
+        cout << "Mes: ";
+        cin >> actualMonth;
+        if (actualMonth < 1 || actualMonth > 12)
+        {
+            cout << "Mes invalido" << endl;
+        }
+    }while(actualMonth < 1 || actualMonth > 12);
+
+    do{
+        cout << "Anio: ";
+        cin >> actualYear;
+        if (actualYear < 2026)
+        {
+            cout << "Anio invalido" << endl;
+        }
+    }while(actualYear < 2026);
+
+    int actualDays = actualYear * 360 + actualMonth * 30 + actualDay;
+
+    for(int i = 0; i < numProducts; i++)
+    {
         double daySales;
-
         cout <<"====================================================" << endl;
-
-        cout <<"Producto:" << inventory[i].product << endl;
-        cout <<"Ingrese el promedio diario de ventas de ese producto " << i+1 << ": " << endl;
+        cout <<"Producto: " << inventory[i].product << endl;
+        cout <<"Ingrese el promedio diario de ventas: ";
         cin >> daySales;
 
-        if(daySales <= 0){
-            cout <<"Error el valor promedio tiene que ser mayor a 0" << endl;    
+        if(daySales <= 0)
+        {
+            cout <<"Error el promedio tiene que ser mayor a 0" << endl;
         } else {
             double days = (inventory[i].stock*1.0)/daySales;
+            cout <<"Quedan " << days <<" dias restantes de stock" << endl;
+        }
 
-        cout <<"Quedan " << days <<" dias restantes de stock" << endl;
+        int expDays = inventory[i].yearExp * 360 + inventory[i].monthExp * 30 + inventory[i].dayExp;
+        int remaining = expDays - actualDays;
 
-        }  if(inventory[i].yearExp < actualYear || 
-            (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth) ||
-            (inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp < actualDay )) {
-             cout <<"[ALERTA] El producto ya ha caducado! RETIRAR DE INVENTARIO" << endl;
-            } else if(inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp >=  actualDay && inventory[i].dayExp <= (actualDay + 7)) {
-                cout <<"[ALERTA] El producto esta a menos de una semana de caducar! LIQUIDAR PRODUCTO" << endl;
-            } else {
-                cout <<"[ESTADO] El producto aun no caduca" << endl;
-            }
+        if(remaining < 0)
+        {
+            cout <<"ALERTA El producto ya ha caducado ALERTA" << endl;
+        } else if(remaining <= 7)
+        {
+            cout <<"ALERTA El producto esta a menos de una semana de caducar ALERTA" << endl;
+        } else {
+            cout <<"El producto aun no caduca" << endl;
+        }
         cout <<"====================================================" << endl;
     }
 }
@@ -207,15 +260,144 @@ void mostrarCreditos(){
     cout << "Catedratico:  Ing. Elisa Aldana" << endl;
     cout << "Ciclo 02 / Ano:  2026" << endl;
     cout <<"===================================================" << endl;
-
 }
 
+void saveProducts(Product inventory[], int numProducts){
+    ofstream archivo("products.txt");
 
+    if (!archivo.is_open())
+    {
+        cout << "No se pudo guardar el archivo de los productos." << endl;
+        return;
+    }
+    
+    archivo << numProducts << endl;
 
+    for (int i = 0; i < numProducts; i++)
+    {
+        archivo << inventory[i].idProduct << endl;
+        archivo << inventory[i].product << endl;
+        archivo << inventory[i].price << endl;
+        archivo << inventory[i].stock << endl;
+        archivo << inventory[i].minimumStock << endl;
+        archivo << inventory[i].totalSales << endl;
+        archivo << inventory[i].yearExp << endl;
+        archivo << inventory[i].dayExp << endl;
+        archivo << inventory[i].monthExp << endl;
+    }
+
+    archivo.close();
+}
+
+int loadProducts(Product inventory[]){
+    ifstream archivo("products.txt");
+    int total = 0;
+
+    if (!archivo.is_open())
+    {
+        return 0;
+    }
+    
+    archivo >> total;
+
+    if (total > 100)
+    {
+        total = 100;
+    }
+    
+    for (int i = 0; i < total; i++)
+    {
+        archivo >> inventory[i].idProduct;
+        archivo >> inventory[i].product;
+        archivo >> inventory[i].price;
+        archivo >> inventory[i].stock;
+        archivo >> inventory[i].minimumStock;
+        archivo >> inventory[i].totalSales;
+        archivo >> inventory[i].yearExp;
+        archivo >> inventory[i].dayExp;
+        archivo >> inventory[i].monthExp;
+    }
+
+    archivo.close();
+    return total;
+}
+
+int readInt(string message){
+    int value;
+    cout << message;
+    cin >> value; 
+
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Entrada invalida. " << message;
+        cin >> value;
+    }
+    return value;
+}
+
+float readFloat(string message){
+    float value;
+    cout << message;
+    cin >> value;
+
+    while (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Entrada invalida. " << message;
+        cin >> value;
+    }
+
+    return value;
+}
+
+int daysMonth(int month, int year){
+    if (month == 2){
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+            return 29;
+        }
+        return 28;
+    }
+
+    if (month == 4 || month == 6 || month == 9 || month == 11){
+        return 30;
+    }
+
+    return 31;
+}
+
+void askDate(int &day, int &month, int &year){
+    do{
+        month = readInt("Mes: ");
+        if (month < 1 || month > 12)
+        {
+            cout << "Mes invalido" << endl;
+        }
+    }while(month < 1 || month > 12);
+
+    do{
+        year = readInt("Anio: ");
+        if (year < 2026)
+        {
+            cout << "Anio invalido" << endl;
+        }
+    }while(year < 2026);
+
+    do{
+        day = readInt("Dia: ");
+        if (day < 1 || day > daysMonth(month, year))
+        {
+            cout << "Dia invalido para ese mes" << endl;
+        }
+    }while(day < 1 || day > daysMonth(month, year));
+}
 
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
-    if (numProducts >= 100) {
+    if (numProducts >= 100) 
+    {
         cout << "El inventario esta lleno" << endl;
         return numProducts;
     }
@@ -223,57 +405,217 @@ int registerProduct(Product inventory[], int numProducts){
     string name;
     float price;
     int stock, minimumStock;
+    int dayExp, monthExp, yearExp;
 
-    cout << "=====Registrar producto=====" << endl;
-    cout << "Nombre: ";
+    cout << "=====REGISTRAR PRODUCTO=====" << endl;
+    cout << "Nombre (Una palabra): ";
     cin >> name;
 
     do{
-        cout << "Precio: ";
-        cin >> price;
-        if (price <= 0){
+        price = readFloat("Precio: ");
+        if (price <= 0)
+        {
             cout << "El precio debe ser mayor a 0" << endl;
         }
     }while (price <= 0);
 
     do{
-        cout << "Stock inicial: ";
-        cin >> stock;
+        stock = readInt("Stock inicial: ");
         if (stock < 0)
         {
             cout << "El stock no puede ser negativo" << endl;
         }
     }while(stock < 0);
 
-    do
-    {
-        cout << "Stock minimo: ";
-        cin >> minimumStock;
+    do{
+        minimumStock = readInt("Stock minimo: ");
         if (minimumStock < 0)
         {
             cout << "El stock minimo no puede ser negativo" << endl;
         }
-    } while (minimumStock < 0);
+    }while (minimumStock < 0);
 
-    inventory[numProducts].idProducto = numProducts + 1;
+    cout << "Fecha de caducidad" << endl;
+    askDate(dayExp, monthExp, yearExp);
+
+    inventory[numProducts].idProduct = numProducts + 1;
     inventory[numProducts].product = name;
     inventory[numProducts].price = price;
     inventory[numProducts].stock = stock;
     inventory[numProducts].minimumStock = minimumStock;
     inventory[numProducts].totalSales = 0;
-    cout << "Producto registrado exitosamente!" << endl;
+    inventory[numProducts].dayExp = dayExp;
+    inventory[numProducts].monthExp = monthExp;
+    inventory[numProducts].yearExp = yearExp;
+
+    cout << "Producto registrado exitosamente." << endl;
     return numProducts + 1;
 }
 
-void makeSale(Product inventory[], int numProducts){
-    
+bool isExpired(Product product, int day, int month, int year){
+    if (product.yearExp < year)
+    {
+        return true;
+    }
+    if (product.yearExp == year && product.monthExp < month)
+    {
+        return true;
+    }
+    if (product.yearExp == year && product.monthExp == month && product.dayExp < day)
+    {
+        return true;
+    }
+    return false;
 }
-void showInventory(Product inventory[], int numProducts){
 
+void makeSale(Product inventory[], int numProducts, int day, int month, int year){
+    if  (numProducts == 0)
+    {
+        cout << "No hay productos para vender" << endl;
+        return;
+    }
+
+    int id, index, quantity;
+
+    cout << "=====REALIZAR VENTA=====" << endl;
+    for (int i = 0; i < numProducts; i++)
+    {
+        cout << inventory[i].idProduct << " " << inventory[i].product << " $" << inventory[i].price << " Stock: " << inventory[i].stock << endl;
+    }
+    
+    do{
+        id = readInt("ID: ");
+        if (id < 1 || id > numProducts)
+        {
+            cout << "ID incorrecto" << endl;
+        }
+    } while (id < 1 || id > numProducts);
+
+    index = id - 1;
+
+    if (isExpired(inventory[index], day, month, year))
+    {
+        cout << "No se puede vender: el producto " << inventory[index].product << " esta caducado" << endl;
+        return;
+    }
+
+    do{
+        quantity = readInt("Cantidad: ");
+        if (quantity <= 0)
+        {
+            cout << "La cantidad debe ser mayor a 0" << endl;
+        }
+    } while (quantity <= 0);
+
+    if (quantity > inventory[index].stock)
+    {
+        cout << "Stock insuficiente. Disponible: " << inventory[index].stock << endl;
+        return;
+    }
+
+    inventory[index].stock = inventory[index].stock - quantity;
+    inventory[index].totalSales = inventory[index].totalSales + quantity;
+
+    float total = quantity * inventory[index].price;
+    cout << "Venta realizada. Total: $" << total << endl;
+
+    if (inventory[index].stock <= inventory[index].minimumStock)
+    {
+        cout << "ALERTA: Quedan " << inventory[index].stock << " unidades de " << inventory[index].product << " (minimo: " << inventory[index].minimumStock << ")" << endl;
+    }
+}
+
+void addStock(Product inventory[], int numProducts){
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
+
+    int id, quantity, invoice;
+
+    cout << "=====INGRESO DE FACTURA=====" << endl;
+
+    do{
+        invoice = readInt("Numero de factura: ");
+        if (invoice <= 0)
+        {
+            cout << "El numero de factura debe ser mayor a 0" << endl;
+        }
+    } while (invoice <= 0);
+
+    for (int i = 0; i < numProducts; i++)
+    {
+        cout << inventory[i].idProduct << ". " << inventory[i].product << " (stock: " << inventory[i].stock << ")" << endl;
+    }
+
+    do{
+        id = readInt("ID del producto: ");
+        if (id < 1 || id > numProducts)
+        {
+            cout << "ID invalido" << endl;
+        }
+    } while (id < 1 || id > numProducts);
+
+    do{
+        quantity = readInt("Cantidad recibida: ");
+        if (quantity <= 0)
+        {
+            cout << "La cantidad debe ser mayor a 0" << endl;
+        }
+    } while (quantity <= 0);
+
+    inventory[id - 1].stock = inventory[id - 1].stock + quantity;
+
+    cout << "Factura " << invoice << " registrada. " << inventory[id - 1].product << " ahora tiene " << inventory[id - 1].stock << " unidades" << endl;
+}
+
+void showInventory(Product inventory[], int numProducts){
+    cout << "=====INVENTARIO=====" << endl;
+
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
+    
+    for( int i = 0; i < numProducts; i++){
+        cout << "ID: " << inventory[i].idProduct << endl;
+        cout << "Producto: " << inventory[i].product << endl;
+        cout << "Precio: " << inventory[i].price << endl;
+        cout << "Stock: " << inventory[i].stock << endl;
+        cout << "Stock minimo: " << inventory[i].minimumStock << endl;
+        cout << "Ventas Totales: " << inventory[i].totalSales << endl;
+        cout << "Caducidad: " << inventory[i].dayExp << "/" << inventory[i].monthExp << "/" << inventory[i].yearExp << endl;
+        cout << "====================" << endl;
+    }
 }
 
 void reviewStock(Product inventory[], int numProducts){
+    cout << "=====REVISION DE STOCK=====" << endl;
 
+    if (numProducts == 0){
+        cout << "NO HAY PRODUCTO REGISTRADOS" << endl;
+        return;
+    }
+
+    int alert = 0;
+
+    for (int i = 0; i < numProducts; i++){
+        if (inventory[i].stock == 0){
+            cout << "PRODUCTO AGOTADO: " << inventory[i].product << endl;
+            alert++;
+        } else if (inventory[i].stock <= inventory[i].minimumStock)
+        {
+            cout << "ALERTA: " << inventory[i].product << " tiene " << inventory[i].stock << " unidades (minimo de unidades: " << inventory[i].minimumStock << ")" << endl;
+            alert++;
+        }
+    }
+    
+    if (alert == 0)
+    {
+        cout << "Todos los productos cuentan con suficiente stock" << endl;
+    }
 }
 
 //Main structure of the system
@@ -282,77 +624,91 @@ int main(){
 
     //Variables(No globals)
     user users[5];
-    int posicionUsuario = -1;
+    int userPosition = -1;
     Product inventory[100];
-    int numusers = 0;
-    cargarUsuarios(users, numusers);
-    int numProducts = 0;
-    int currentuserroles = 0;
-    int yearexp;
-    int dayexp;
-    int monthexp;
+    int numUsers = 0;
+    cargarUsuarios(users, numUsers);
+    int numProducts = loadProducts(inventory);
+    int currentUserRoles = 0;
 
     user enteredUser;
-    cout << "Ingrese su nombre de usuario: ";
-    cin >> enteredUser.username;
-    cout << "Ingrese su contrasena: ";
-    cin >> enteredUser.password;
+    int attempts = 0;
+    while (userPosition == -1 && attempts < 3)
+    {
+        cout << "Ingrese su nombre de usuario: ";
+        cin >> enteredUser.username;
+        cout << "ingrese su contrasena: ";
+        cin >> enteredUser.password;
 
-    for (int i=0; i < numusers; i++){
-    
-        if (enteredUser.username == users[i].username && enteredUser.password == users[i].password){
-            posicionUsuario = i;
-        break;
+        for (int i = 0; i < numUsers; i++)
+        {
+            if (enteredUser.username == users[i].username && enteredUser.password == users[i].password)
+            {
+                userPosition = i;
+                break;
+            }
+        }
+        
+        if (userPosition == -1)
+        {
+            attempts++;
+            cout << "Usuario o contrasenas incorrectos." << endl;
         }
     }
-    if (posicionUsuario == -1){
-        cout << "Usuario o contrasena incorrectos" << endl;
+    
+    if (userPosition == -1)
+    {
+        cout << "Demasiados intentos. Cerrando el programa" << endl;
         return 1;
     }
-
-    currentuserroles = users[posicionUsuario].rol;
+    
+    currentUserRoles = users[userPosition].rol;
     cout << "Acceso concedido." << endl;
-    cout << "ID de usuario: " << users[posicionUsuario].iduser << endl;
-    cout << "Nombre de usuario: " << users[posicionUsuario].username << endl;
+    cout << "ID de usuario: " << users[userPosition].iduser << endl;
+    cout << "Nombre de usuario: " << users[userPosition].username << endl;
+
+    int todayDay, todayMonth, todayYear;
+    cout << "Ingrese la fecha de hoy: " << endl;
+    askDate(todayDay, todayMonth, todayYear);
 
     //Menu - Victor
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
-        if (currentuserroles == 1){
-            cout <<"1.Productos" << endl;
+        if (currentUserRoles == 1){
+            cout <<"1. Productos" << endl;
         }
-        cout <<"2.Ventas" << endl;
-        cout <<"3.Ayuda" << endl;
-        cout <<"4.Creditos" << endl;
-        cout <<"5.Cerrar Sesion" << endl;
-        if (currentuserroles == 1) {
-            cout << "6.Registrar Usuario" << endl;
+        cout <<"2. Ventas" << endl;
+        cout <<"3. Ayuda" << endl;
+        cout <<"4. Creditos" << endl;
+        cout <<"5. Cerrar Sesion" << endl;
+        if (currentUserRoles == 1) {
+            cout << "6. Registrar Usuario" << endl;
             cout << "7. Eliminar usuario" << endl;
             cout << "8. Ver usuarios" << endl;
-        }else if (currentuserroles == 2) {
+        }else if (currentUserRoles == 2) {
             cout << "6. Ver usuarios" << endl;
         } else {
             cout << "Error: rol de usuario no valido." << endl;
             return 1;
         }
-        cout <<"Ingrese una opcion:" << endl;
-        cin >> option;
+        option = readInt("Ingrese una opcion: ");
 
         switch (option){
             case 1:
-            if (currentuserroles == 1){
+            if (currentUserRoles == 1){
                 do{
-                    cout <<"=====Producto=====" << endl;
-                    cout <<"1.Registrar producto" << endl;
-                    cout <<"2.Ver inventario" << endl;
-                    cout <<"3.Ver simulador de dias de inventario" << endl;
-                    cout <<"4.Revisar stock" << endl;
-                    cout <<"5.Volver al menu principal" << endl;
-                    cout <<"Ingrese una opcion:" << endl;
-                    cin >> optionProduct;
+                    cout << "=====Producto=====" << endl;
+                    cout << "1. Registrar producto" << endl;
+                    cout << "2. Ver inventario" << endl;
+                    cout << "3. Ver simulador de dias de inventario" << endl;
+                    cout << "4. Revisar stock" << endl;
+                    cout << "5. Ingresar factura" << endl;
+                    cout << "6. Volver al menu principal" << endl;
+                    optionProduct = readInt("Ingrese una opcion: ");
                     switch (optionProduct){
                         case 1:
                             numProducts = registerProduct(inventory, numProducts);
+                            saveProducts(inventory, numProducts);
                             break;
                         case 2:
                             showInventory(inventory, numProducts);
@@ -363,8 +719,12 @@ int main(){
                         case 4:
                             reviewStock(inventory, numProducts);
                             break;
+                        case 5:
+                            addStock(inventory, numProducts);
+                            saveProducts(inventory, numProducts);
+                            break;
                     }
-                }while(optionProduct !=5);
+                }while(optionProduct !=6);
                 }else {
                 cout <<"acceso denegado: solo para administradores." << endl;
                 }
@@ -375,12 +735,12 @@ int main(){
                     cout <<"1.Realizar ventas" << endl;
                     cout <<"2.Ver inventario" << endl;
                     cout <<"3.Volver al menu principal" << endl;
-                    cout <<"Ingrese una opcion:" << endl;
-                    cin >> optionSales;
+                    optionSales = readInt("Ingrese una opcion: ");
 
                     switch (optionSales){
                         case 1:
-                            makeSale(inventory, numProducts);
+                            makeSale(inventory, numProducts, todayDay, todayMonth, todayYear);
+                            saveProducts(inventory, numProducts);
                             break;
                         case 2:
                             showInventory(inventory, numProducts);
@@ -398,8 +758,9 @@ int main(){
                 cout <<"sobre los productso que estan en el inventario)." << endl;
                 cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
                 cout <<"el stock del producto)." << endl;
-                cout <<"4.Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
-                cout <<"5.Volver al menu principal (Regresa al menu principal)." << endl;
+                cout <<"4. Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
+                cout <<"5. Ingresar factura (aumenta el stock de un producto que ya existe)." << endl;
+                cout <<"6.Volver al menu principal (Regresa al menu principal)." << endl;
                 cout <<"=======================================================================================" << endl;
                 cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
                 cout <<"encontrar 3 opciones que son: " << endl;
@@ -413,29 +774,28 @@ int main(){
             case 4:
                 mostrarCreditos();
                 break;
-
             case 5:
                 cout <<"Cerrando sesion..." << endl;
                 break;
             case 6 :
-             if (currentuserroles == 1){
-                registrarUsuario(users, numusers);
-                }else if (currentuserroles == 2){
-                    verUsuarios(users, numusers);
+             if (currentUserRoles == 1){
+                registerUser(users, numUsers);
+                }else if (currentUserRoles == 2){
+                    verUsuarios(users, numUsers);
                 }else {
                 cout << "Ingrese opcion valida." << endl;
                 }
                 break;
             case 7 :
-                if (currentuserroles == 1){
-                    eliminarUsuario(users,numusers);
+                if (currentUserRoles == 1){
+                    eliminarUsuario(users,numUsers);
                 } else {
                     cout << "Ingrese opcion valida." << endl;
                 }
                 break;
             case 8 :
-                if (currentuserroles == 1){
-                    verUsuarios(users,numusers);
+                if (currentUserRoles == 1){
+                    verUsuarios(users,numUsers);
                 } else {
                 cout << "Ingrese opcion valida." << endl;
                 }
