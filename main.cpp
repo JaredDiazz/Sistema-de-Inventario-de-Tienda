@@ -159,37 +159,72 @@ void verUsuarios(user newUser[], int totalusuarios) {
 
 //Simulator - Victor
 void inventorySimulator(Product inventory[], int numProducts){
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
 
+    int actualDay, actualMonth, actualYear;
+    cout << "Ingrese la fecha de hoy" << endl;
 
-    int actualMonth = 11;
-    int actualYear = 2026;
-    int actualDay = 18;
+    do{
+        cout << "Dia: ";
+        cin >> actualDay;
+        if (actualDay < 1 || actualDay > 31)
+        {
+            cout << "Dia invalido" << endl;
+        }
+    }while(actualDay < 1 || actualDay > 31);
 
-    for(int i = 0; i < numProducts; i++){
+    do{
+        cout << "Mes: ";
+        cin >> actualMonth;
+        if (actualMonth < 1 || actualMonth > 12)
+        {
+            cout << "Mes invalido" << endl;
+        }
+    }while(actualMonth < 1 || actualMonth > 12);
+
+    do{
+        cout << "Anio: ";
+        cin >> actualYear;
+        if (actualYear < 2026)
+        {
+            cout << "Anio invalido" << endl;
+        }
+    }while(actualYear < 2026);
+
+    int actualDays = actualYear * 360 + actualMonth * 30 + actualDay;
+
+    for(int i = 0; i < numProducts; i++)
+    {
         double daySales;
-
         cout <<"====================================================" << endl;
-
-        cout <<"Producto:" << inventory[i].product << endl;
-        cout <<"Ingrese el promedio diario de ventas de ese producto " << i+1 << ": " << endl;
+        cout <<"Producto: " << inventory[i].product << endl;
+        cout <<"Ingrese el promedio diario de ventas: ";
         cin >> daySales;
 
-        if(daySales <= 0){
-            cout <<"Error el valor promedio tiene que ser mayor a 0" << endl;    
+        if(daySales <= 0)
+        {
+            cout <<"Error el promedio tiene que ser mayor a 0" << endl;
         } else {
             double days = (inventory[i].stock*1.0)/daySales;
+            cout <<"Quedan " << days <<" dias restantes de stock" << endl;
+        }
 
-        cout <<"Quedan " << days <<" dias restantes de stock" << endl;
+        int expDays = inventory[i].yearExp * 360 + inventory[i].monthExp * 30 + inventory[i].dayExp;
+        int remaining = expDays - actualDays;
 
-        }  if(inventory[i].yearExp < actualYear || 
-            (inventory[i].yearExp == actualYear && inventory[i].monthExp < actualMonth) ||
-            (inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp < actualDay )) {
-             cout <<"[ALERTA] El producto ya ha caducado! RETIRAR DE INVENTARIO" << endl;
-            } else if(inventory[i].yearExp == actualYear && inventory[i].monthExp == actualMonth && inventory[i].dayExp >=  actualDay && inventory[i].dayExp <= (actualDay + 7)) {
-                cout <<"[ALERTA] El producto esta a menos de una semana de caducar! LIQUIDAR PRODUCTO" << endl;
-            } else {
-                cout <<"[ESTADO] El producto aun no caduca" << endl;
-            }
+        if(remaining < 0)
+        {
+            cout <<"ALERTA El producto ya ha caducado ALERTA" << endl;
+        } else if(remaining <= 7)
+        {
+            cout <<"ALERTA El producto esta a menos de una semana de caducar ALERTA" << endl;
+        } else {
+            cout <<"El producto aun no caduca" << endl;
+        }
         cout <<"====================================================" << endl;
     }
 }
@@ -633,7 +668,8 @@ int main(){
                 cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
                 cout <<"el stock del producto)." << endl;
                 cout <<"4.Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
-                cout <<"5.Volver al menu principal (Regresa al menu principal)." << endl;
+                cout <<"5.Ingresar factura (Permite al usuario aumentar el stock de un producto)" << endl;
+                cout <<"6.Volver al menu principal (Regresa al menu principal)." << endl;
                 cout <<"=======================================================================================" << endl;
                 cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
                 cout <<"encontrar 3 opciones que son: " << endl;
