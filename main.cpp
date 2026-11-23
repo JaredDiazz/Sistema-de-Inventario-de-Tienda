@@ -526,6 +526,7 @@ void showInventory(Product inventory[], int numProducts){
         cout << "Stock: " << inventory[i].stock << endl;
         cout << "Stock minimo: " << inventory[i].minimumStock << endl;
         cout << "Ventas Totales: " << inventory[i].totalSales << endl;
+        cout << "Caducidad: " << inventory[i].dayExp << "/" << inventory[i].monthExp << "/" << inventory[i].yearExp << endl;
         cout << "====================" << endl;
     }
 }
