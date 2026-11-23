@@ -243,7 +243,6 @@ void mostrarCreditos(){
     cout << "Catedratico:  Ing. Elisa Aldana" << endl;
     cout << "Ciclo 02 / Ano:  2026" << endl;
     cout <<"===================================================" << endl;
-
 }
 
 void saveProducts(Product inventory[], int numProducts){
@@ -667,8 +666,8 @@ int main(){
                 cout <<"sobre los productso que estan en el inventario)." << endl;
                 cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
                 cout <<"el stock del producto)." << endl;
-                cout <<"4.Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
-                cout <<"5.Ingresar factura (Permite al usuario aumentar el stock de un producto)" << endl;
+                cout <<"4. Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
+                cout <<"5. Ingresar factura (aumenta el stock de un producto que ya existe)." << endl;
                 cout <<"6.Volver al menu principal (Regresa al menu principal)." << endl;
                 cout <<"=======================================================================================" << endl;
                 cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
@@ -683,7 +682,6 @@ int main(){
             case 4:
                 mostrarCreditos();
                 break;
-
             case 5:
                 cout <<"Cerrando sesion..." << endl;
                 break;
