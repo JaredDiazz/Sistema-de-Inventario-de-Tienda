@@ -563,64 +563,64 @@ int main(){
 
     //Variables(No globals)
     user users[5];
-    int posicionUsuario = -1;
+    int userPosition = -1;
     Product inventory[100];
-    int numusers = 0;
-    cargarUsuarios(users, numusers);
+    int numUsers = 0;
+    cargarUsuarios(users, numUsers);
     int numProducts = loadProducts(inventory);
-    int currentuserroles = 0;
+    int currentUserRoles = 0;
 
     user enteredUser;
     int attempts = 0;
-    while (posicionUsuario == -1 && attempts < 3)
+    while (userPosition == -1 && attempts < 3)
     {
         cout << "Ingrese su nombre de usuario: ";
         cin >> enteredUser.username;
         cout << "ingrese su contrasena: ";
         cin >> enteredUser.password;
 
-        for (int i = 0; i < numusers; i++)
+        for (int i = 0; i < numUsers; i++)
         {
             if (enteredUser.username == users[i].username && enteredUser.password == users[i].password)
             {
-                posicionUsuario = i;
+                userPosition = i;
                 break;
             }
         }
         
-        if (posicionUsuario == -1)
+        if (userPosition == -1)
         {
             attempts++;
             cout << "Usuario o contrasenas incorrectos." << endl;
         }
     }
     
-    if (posicionUsuario == -1)
+    if (userPosition == -1)
     {
         cout << "Demasiados intentos. Cerrando el programa" << endl;
         return 1;
     }
     
-    currentuserroles = users[posicionUsuario].rol;
+    currentUserRoles = users[userPosition].rol;
     cout << "Acceso concedido." << endl;
-    cout << "ID de usuario: " << users[posicionUsuario].iduser << endl;
-    cout << "Nombre de usuario: " << users[posicionUsuario].username << endl;
+    cout << "ID de usuario: " << users[userPosition].iduser << endl;
+    cout << "Nombre de usuario: " << users[userPosition].username << endl;
 
     //Menu - Victor
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
-        if (currentuserroles == 1){
+        if (currentUserRoles == 1){
             cout <<"1. Productos" << endl;
         }
         cout <<"2. Ventas" << endl;
         cout <<"3. Ayuda" << endl;
         cout <<"4. Creditos" << endl;
         cout <<"5. Cerrar Sesion" << endl;
-        if (currentuserroles == 1) {
+        if (currentUserRoles == 1) {
             cout << "6. Registrar Usuario" << endl;
             cout << "7. Eliminar usuario" << endl;
             cout << "8. Ver usuarios" << endl;
-        }else if (currentuserroles == 2) {
+        }else if (currentUserRoles == 2) {
             cout << "6. Ver usuarios" << endl;
         } else {
             cout << "Error: rol de usuario no valido." << endl;
@@ -631,7 +631,7 @@ int main(){
 
         switch (option){
             case 1:
-            if (currentuserroles == 1){
+            if (currentUserRoles == 1){
                 do{
                     cout << "=====Producto=====" << endl;
                     cout << "1. Registrar producto" << endl;
@@ -716,24 +716,24 @@ int main(){
                 cout <<"Cerrando sesion..." << endl;
                 break;
             case 6 :
-             if (currentuserroles == 1){
-                registerUser(users, numusers);
-                }else if (currentuserroles == 2){
-                    verUsuarios(users, numusers);
+             if (currentUserRoles == 1){
+                registerUser(users, numUsers);
+                }else if (currentUserRoles == 2){
+                    verUsuarios(users, numUsers);
                 }else {
                 cout << "Ingrese opcion valida." << endl;
                 }
                 break;
             case 7 :
-                if (currentuserroles == 1){
-                    eliminarUsuario(users,numusers);
+                if (currentUserRoles == 1){
+                    eliminarUsuario(users,numUsers);
                 } else {
                     cout << "Ingrese opcion valida." << endl;
                 }
                 break;
             case 8 :
-                if (currentuserroles == 1){
-                    verUsuarios(users,numusers);
+                if (currentUserRoles == 1){
+                    verUsuarios(users,numUsers);
                 } else {
                 cout << "Ingrese opcion valida." << endl;
                 }
