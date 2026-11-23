@@ -397,7 +397,8 @@ void askDate(int &day, int &month, int &year){
 
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
-    if (numProducts >= 100) {
+    if (numProducts >= 100) 
+    {
         cout << "El inventario esta lleno" << endl;
         return numProducts;
     }
@@ -407,21 +408,20 @@ int registerProduct(Product inventory[], int numProducts){
     int stock, minimumStock;
     int dayExp, monthExp, yearExp;
 
-    cout << "=====Registrar producto=====" << endl;
+    cout << "=====REGISTRAR PRODUCTO=====" << endl;
     cout << "Nombre (Una palabra): ";
     cin >> name;
 
     do{
-        cout << "Precio: ";
-        cin >> price;
-        if (price <= 0){
+        price = readFloat("Precio: ");
+        if (price <= 0)
+        {
             cout << "El precio debe ser mayor a 0" << endl;
         }
     }while (price <= 0);
 
     do{
-        cout << "Stock inicial: ";
-        cin >> stock;
+        stock = readInt("Stock inicial: ");
         if (stock < 0)
         {
             cout << "El stock no puede ser negativo" << endl;
@@ -429,40 +429,15 @@ int registerProduct(Product inventory[], int numProducts){
     }while(stock < 0);
 
     do{
-        cout << "Stock minimo: ";
-        cin >> minimumStock;
+        minimumStock = readInt("Stock minimo: ");
         if (minimumStock < 0)
         {
             cout << "El stock minimo no puede ser negativo" << endl;
         }
-    } while (minimumStock < 0);
+    }while (minimumStock < 0);
 
-    do{
-        cout << "Dia de caducidad: ";
-        cin >> dayExp;
-        if (dayExp < 1 || dayExp > 31)
-        {
-            cout << "Dia invalido" << endl;
-        } 
-    } while (dayExp < 1 || dayExp > 31);
-    
-    do{
-        cout << "Mes de caducidad: ";
-        cin >> monthExp;
-        if (monthExp < 1 || monthExp > 12)
-        {
-            cout << "Mes invalido" << endl;
-        }
-    } while (monthExp < 1 || monthExp > 12);
-
-    do{
-        cout << "Anio de caducidad: ";
-        cin >> yearExp;
-        if (yearExp < 2026)
-        {
-            cout << "Anio invalido" << endl;
-        }
-    } while (yearExp < 2026);
+    cout << "Fecha de caducidad" << endl;
+    askDate(dayExp, monthExp, yearExp);
 
     inventory[numProducts].idProduct = numProducts + 1;
     inventory[numProducts].product = name;
@@ -474,7 +449,7 @@ int registerProduct(Product inventory[], int numProducts){
     inventory[numProducts].monthExp = monthExp;
     inventory[numProducts].yearExp = yearExp;
 
-    cout << "Producto registrado exitosamente!" << endl;
+    cout << "Producto registrado exitosamente." << endl;
     return numProducts + 1;
 }
 
