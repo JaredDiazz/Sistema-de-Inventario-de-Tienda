@@ -483,8 +483,7 @@ void makeSale(Product inventory[], int numProducts, int day, int month, int year
         cout << inventory[i].idProduct << " " << inventory[i].product << " $" << inventory[i].price << " Stock: " << inventory[i].stock << endl;
     }
     
-     do
-    {
+    do{
         id = readInt("ID: ");
         if (id < 1 || id > numProducts)
         {
@@ -500,8 +499,7 @@ void makeSale(Product inventory[], int numProducts, int day, int month, int year
         return;
     }
 
-    do
-    {
+    do{
         quantity = readInt("Cantidad: ");
         if (quantity <= 0)
         {
