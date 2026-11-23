@@ -349,6 +349,55 @@ void makeSale(Product inventory[], int numProducts){
     }
 }
 
+void addStock(Product inventory[], int numProducts){
+    if (numProducts == 0)
+    {
+        cout << "No hay productos registrados" << endl;
+        return;
+    }
+    
+    int id, quantity, invoice;
+
+    cout << "=====INGRESO DE FACTURA=====" << endl;
+
+    do{
+      cout << "Numero de factura: ";
+      cin >> invoice;
+      if (invoice <= 0)
+      {
+        cout << "El numero de factura debe ser mayor a 0" << endl;
+      }
+        
+    } while (invoice <= 0);
+    
+    for (int i = 0; i < numProducts; i++)
+    {
+        cout << inventory[i].idProduct << ". " << inventory[i].product << " (stock: " << inventory[i].stock << ")" << endl;
+    }
+    
+    do{
+        cout << "ID del producto";
+        cin >> id;
+        if (id < 1 || id > numProducts)
+        {
+            cout << "ID invalido" << endl;
+        }
+    } while (id < 1 || id > numProducts);
+    
+    do{
+        cout << "Cantidad recibida; ";
+        cin >> quantity;
+        if (quantity <= 0)
+        {
+            cout << "La cantidad debe ser mayor a 0" << endl;
+        }
+    } while (quantity <= 0);
+    
+    inventory[id - 1].stock = inventory[id - 1].stock + quantity;
+
+    cout << "Factura " << invoice << " registrada. " << inventory[id - 1].product << " ahora tiene " << inventory[id - 1].stock << " unidades" << endl;
+}
+
 void showInventory(Product inventory[], int numProducts){
     cout << "=====INVENTARIO=====" << endl;
 
@@ -425,6 +474,7 @@ int main(){
         break;
         }
     }
+
     if (posicionUsuario == -1){
         cout << "Usuario o contrasena incorrectos" << endl;
         return 1;
@@ -439,14 +489,14 @@ int main(){
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
         if (currentuserroles == 1){
-            cout <<"1.Productos" << endl;
+            cout <<"1. Productos" << endl;
         }
-        cout <<"2.Ventas" << endl;
-        cout <<"3.Ayuda" << endl;
-        cout <<"4.Creditos" << endl;
-        cout <<"5.Cerrar Sesion" << endl;
+        cout <<"2. Ventas" << endl;
+        cout <<"3. Ayuda" << endl;
+        cout <<"4. Creditos" << endl;
+        cout <<"5. Cerrar Sesion" << endl;
         if (currentuserroles == 1) {
-            cout << "6.Registrar Usuario" << endl;
+            cout << "6. Registrar Usuario" << endl;
             cout << "7. Eliminar usuario" << endl;
             cout << "8. Ver usuarios" << endl;
         }else if (currentuserroles == 2) {
@@ -462,13 +512,13 @@ int main(){
             case 1:
             if (currentuserroles == 1){
                 do{
-                    cout <<"=====Producto=====" << endl;
-                    cout <<"1.Registrar producto" << endl;
-                    cout <<"2.Ver inventario" << endl;
-                    cout <<"3.Ver simulador de dias de inventario" << endl;
-                    cout <<"4.Revisar stock" << endl;
-                    cout <<"5.Volver al menu principal" << endl;
-                    cout <<"Ingrese una opcion:" << endl;
+                    cout << "=====Producto=====" << endl;
+                    cout << "1. Registrar producto" << endl;
+                    cout << "2. Ver inventario" << endl;
+                    cout << "3. Ver simulador de dias de inventario" << endl;
+                    cout << "4. Revisar stock" << endl;
+                    cout << "5. Ingresar factura" << endl;
+                    cout << "6. Volver al menu principal" << endl;
                     cin >> optionProduct;
                     switch (optionProduct){
                         case 1:
@@ -483,8 +533,11 @@ int main(){
                         case 4:
                             reviewStock(inventory, numProducts);
                             break;
+                        case 5:
+                            addStock(inventory, numProducts);
+                            break;
                     }
-                }while(optionProduct !=5);
+                }while(optionProduct !=6);
                 }else {
                 cout <<"acceso denegado: solo para administradores." << endl;
                 }
