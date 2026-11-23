@@ -211,6 +211,66 @@ void mostrarCreditos(){
 
 }
 
+void saveProducts(Product inventory[], int numProducts){
+    ofstream archivo("products.txt");
+
+    if (!archivo.is_open())
+    {
+        cout << "No se pudo guardar el archivo de los productos." << endl;
+        return;
+    }
+    
+    archivo << numProducts << endl;
+
+    for (int i = 0; i < numProducts; i++)
+    {
+        archivo << inventory[i].idProduct << endl;
+        archivo << inventory[i].product << endl;
+        archivo << inventory[i].price << endl;
+        archivo << inventory[i].stock << endl;
+        archivo << inventory[i].minimumStock << endl;
+        archivo << inventory[i].totalSales << endl;
+        archivo << inventory[i].yearExp << endl;
+        archivo << inventory[i].dayExp << endl;
+        archivo << inventory[i].monthExp << endl;
+    }
+
+    archivo.close();
+}
+
+int loadProducts(Product inventory[]){
+    ifstream archivo("products.txt");
+    int total = 0;
+
+    if (!archivo.is_open())
+    {
+        return 0;
+    }
+    
+    archivo >> total;
+
+    if (total > 100)
+    {
+        total = 100;
+    }
+    
+    for (int i = 0; i < total; i++)
+    {
+        archivo >> inventory[i].idProduct;
+        archivo >> inventory[i].product;
+        archivo >> inventory[i].price;
+        archivo >> inventory[i].stock;
+        archivo >> inventory[i].minimumStock;
+        archivo >> inventory[i].totalSales;
+        archivo >> inventory[i].yearExp;
+        archivo >> inventory[i].dayExp;
+        archivo >> inventory[i].monthExp;
+    }
+
+    archivo.close();
+    return total;
+}
+
 //Inventory and sales - Jared
 int registerProduct(Product inventory[], int numProducts){
     if (numProducts >= 100) {
@@ -455,7 +515,7 @@ int main(){
     Product inventory[100];
     int numusers = 0;
     cargarUsuarios(users, numusers);
-    int numProducts = 0;
+    int numProducts = loadProducts(inventory);
     int currentuserroles = 0;
     int yearexp;
     int dayexp;
@@ -523,6 +583,7 @@ int main(){
                     switch (optionProduct){
                         case 1:
                             numProducts = registerProduct(inventory, numProducts);
+                            saveProducts(inventory, numProducts);
                             break;
                         case 2:
                             showInventory(inventory, numProducts);
@@ -535,6 +596,7 @@ int main(){
                             break;
                         case 5:
                             addStock(inventory, numProducts);
+                            saveProducts(inventory, numProducts);
                             break;
                     }
                 }while(optionProduct !=6);
@@ -554,6 +616,7 @@ int main(){
                     switch (optionSales){
                         case 1:
                             makeSale(inventory, numProducts);
+                            saveProducts(inventory, numProducts);
                             break;
                         case 2:
                             showInventory(inventory, numProducts);
