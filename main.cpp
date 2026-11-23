@@ -325,7 +325,7 @@ int registerProduct(Product inventory[], int numProducts){
     do{
         cout << "Mes de caducidad: ";
         cin >> monthExp;
-        if (monthExp < 1 || monthExp > 12);
+        if (monthExp < 1 || monthExp > 12)
         {
             cout << "Mes invalido" << endl;
         }
