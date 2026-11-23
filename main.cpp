@@ -517,9 +517,6 @@ int main(){
     cargarUsuarios(users, numusers);
     int numProducts = loadProducts(inventory);
     int currentuserroles = 0;
-    int yearexp;
-    int dayexp;
-    int monthexp;
 
     user enteredUser;
     cout << "Ingrese su nombre de usuario: ";
