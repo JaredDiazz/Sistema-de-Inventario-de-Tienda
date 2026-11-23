@@ -533,44 +533,40 @@ void addStock(Product inventory[], int numProducts){
         cout << "No hay productos registrados" << endl;
         return;
     }
-    
+
     int id, quantity, invoice;
 
     cout << "=====INGRESO DE FACTURA=====" << endl;
 
     do{
-      cout << "Numero de factura: ";
-      cin >> invoice;
-      if (invoice <= 0)
-      {
-        cout << "El numero de factura debe ser mayor a 0" << endl;
-      }
-        
+        invoice = readInt("Numero de factura: ");
+        if (invoice <= 0)
+        {
+            cout << "El numero de factura debe ser mayor a 0" << endl;
+        }
     } while (invoice <= 0);
-    
+
     for (int i = 0; i < numProducts; i++)
     {
         cout << inventory[i].idProduct << ". " << inventory[i].product << " (stock: " << inventory[i].stock << ")" << endl;
     }
-    
+
     do{
-        cout << "ID del producto: ";
-        cin >> id;
+        id = readInt("ID del producto: ");
         if (id < 1 || id > numProducts)
         {
             cout << "ID invalido" << endl;
         }
     } while (id < 1 || id > numProducts);
-    
+
     do{
-        cout << "Cantidad recibida: ";
-        cin >> quantity;
+        quantity = readInt("Cantidad recibida: ");
         if (quantity <= 0)
         {
             cout << "La cantidad debe ser mayor a 0" << endl;
         }
     } while (quantity <= 0);
-    
+
     inventory[id - 1].stock = inventory[id - 1].stock + quantity;
 
     cout << "Factura " << invoice << " registrada. " << inventory[id - 1].product << " ahora tiene " << inventory[id - 1].stock << " unidades" << endl;
