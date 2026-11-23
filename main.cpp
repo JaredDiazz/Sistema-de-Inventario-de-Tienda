@@ -5,7 +5,7 @@ using namespace std;
 
 //Structure for the users
 struct user{
-    int iduser;
+    int idUser;
     string username;
     string password;
     int rol;
@@ -37,7 +37,7 @@ void guardarUsuarios(user newUser[], int totalusuarios) {
     archivo << totalusuarios << endl;
 
     for (int i = 0; i < totalusuarios; i++) {
-        archivo << newUser[i].iduser << endl;
+        archivo << newUser[i].idUser << endl;
         archivo << newUser[i].username << endl;
         archivo << newUser[i].password << endl;
         archivo << newUser[i].rol << endl;
@@ -76,7 +76,7 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
     }
 
     for (int i = 0; i < totalusuarios; i++) {
-        archivo >> newUser[i].iduser;
+        archivo >> newUser[i].idUser;
         archivo >> newUser[i].username;
         archivo >> newUser[i].password;
         archivo >> newUser[i].rol;
@@ -119,7 +119,7 @@ void registerUser(user newUser[], int &totalUsers) {
         return;
     }
     
-    newUser[totalUsers].iduser = totalUsers + 1;
+    newUser[totalUsers].idUser = totalUsers + 1;
     newUser[totalUsers].username = username;
     newUser[totalUsers].password = password;
     newUser[totalUsers].rol = rol;
@@ -162,7 +162,7 @@ void eliminarUsuario(user newUser[], int &totalusuarios) {
     totalusuarios--;
 
     for (int i = 0; i < totalusuarios; i++) {
-        newUser[i].iduser = i + 1;
+        newUser[i].idUser = i + 1;
     }
 
     guardarUsuarios(newUser, totalusuarios);
@@ -175,7 +175,7 @@ void verUsuarios(user newUser[], int totalusuarios) {
     cout << "Lista de usuarios registrados:" << endl;
 
     for (int i = 0; i < totalusuarios; i++) {
-        cout << "ID: " << newUser[i].iduser
+        cout << "ID: " << newUser[i].idUser
              << ", Nombre: " << newUser[i].username
              << ", Rol: " << newUser[i].rol << endl;
     }
@@ -671,7 +671,7 @@ int main(){
     
     currentUserRoles = users[userPosition].rol;
     cout << "Acceso concedido." << endl;
-    cout << "ID de usuario: " << users[userPosition].iduser << endl;
+    cout << "ID de usuario: " << users[userPosition].idUser << endl;
     cout << "Nombre de usuario: " << users[userPosition].username << endl;
 
     int todayDay, todayMonth, todayYear;
