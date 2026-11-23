@@ -571,24 +571,36 @@ int main(){
     int currentuserroles = 0;
 
     user enteredUser;
-    cout << "Ingrese su nombre de usuario: ";
-    cin >> enteredUser.username;
-    cout << "Ingrese su contrasena: ";
-    cin >> enteredUser.password;
+    int attempts = 0;
+    while (posicionUsuario == -1 && attempts < 3)
+    {
+        cout << "Ingrese su nombre de usuario: ";
+        cin >> enteredUser.username;
+        cout << "ingrese su contrasena: ";
+        cin >> enteredUser.password;
 
-    for (int i=0; i < numusers; i++){
-    
-        if (enteredUser.username == users[i].username && enteredUser.password == users[i].password){
-            posicionUsuario = i;
-        break;
+        for (int i = 0; i < numusers; i++)
+        {
+            if (enteredUser.username == users[i].username && enteredUser.password == users[i].password)
+            {
+                posicionUsuario = i;
+                break;
+            }
+        }
+        
+        if (posicionUsuario == -1)
+        {
+            attempts++;
+            cout << "Usuario o contrasenas incorrectos." << endl;
         }
     }
-
-    if (posicionUsuario == -1){
-        cout << "Usuario o contrasena incorrectos" << endl;
+    
+    if (posicionUsuario == -1)
+    {
+        cout << "Demasiados intentos. Cerrando el programa" << endl;
         return 1;
     }
-
+    
     currentuserroles = users[posicionUsuario].rol;
     cout << "Acceso concedido." << endl;
     cout << "ID de usuario: " << users[posicionUsuario].iduser << endl;
