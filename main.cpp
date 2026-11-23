@@ -80,28 +80,46 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
 
 // Solicita los datos de un nuevo usuario y lo agrega al arreglo.
 // Valida que el rol sea 1 (administrador) o 2 (vendedor) y persiste el cambio en archivo.
-void registrarUsuario(user newUser[], int &totalusuarios) {
-    if (totalusuarios >= 5) {
+void registerUser(user newUser[], int &totalUsers) {
+    if (totalUsers >= 5) {
         cout << "Limite de usuarios alcanzado." << endl;
         return;
     }
 
-    newUser[totalusuarios].iduser = totalusuarios + 1;
+    string username, password;
+    int rol;
 
-    cout << "Ingrese el nombre de usuario: " << endl;
-    cin >> newUser[totalusuarios].username;
-    cout << "Ingrese la contrasena: " << endl;
-    cin >> newUser[totalusuarios].password;
-    cout << "Ingrese el rol (1 = Administrador, 2 = Vendedor): " << endl;
-    cin >> newUser[totalusuarios].rol;
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> username;
 
-    if (newUser[totalusuarios].rol != 1 && newUser[totalusuarios].rol != 2) {
-        cout << "Rol no valido." << endl;
+    for (int i = 0; i < totalUsers; i++)
+    {
+        if (newUser[i].username == username)
+        {
+            cout << "Ese nombre de usuario ya esta en uso." << endl;
+            return;
+        }
+    }
+    
+
+    cout << "Ingrese la contraseña: ";
+    cin >> password;
+    cout << "Ingrese el rol (1 = Admin, 2 = Vendedor): ";
+    cin >> rol;
+
+    if (rol != 1 && rol != 2)
+    {
+        cout << "Rol invalido." << endl;
         return;
     }
+    
+    newUser[totalUsers].iduser = totalUsers + 1;
+    newUser[totalUsers].username = username;
+    newUser[totalUsers].password = password;
+    newUser[totalUsers].rol = rol;
 
-    totalusuarios++;
-    guardarUsuarios(newUser, totalusuarios);
+    totalUsers++;
+    guardarUsuarios(newUser, totalUsers);
     cout << "Usuario registrado exitosamente." << endl;
 }
 
@@ -687,7 +705,7 @@ int main(){
                 break;
             case 6 :
              if (currentuserroles == 1){
-                registrarUsuario(users, numusers);
+                registerUser(users, numusers);
                 }else if (currentuserroles == 2){
                     verUsuarios(users, numusers);
                 }else {
