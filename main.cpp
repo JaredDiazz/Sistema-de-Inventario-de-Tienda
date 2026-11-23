@@ -176,6 +176,7 @@ void verUsuarios(user newUser[], int totalusuarios) {
 }
 
 //Simulator - Victor
+//Muestra si es necesario hacer un restock de un producto, por si esta cerca de vencer o por si hay poco producto.
 void inventorySimulator(Product inventory[], int numProducts){
     if (numProducts == 0)
     {
