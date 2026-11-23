@@ -284,7 +284,7 @@ int registerProduct(Product inventory[], int numProducts){
     int dayExp, monthExp, yearExp;
 
     cout << "=====Registrar producto=====" << endl;
-    cout << "Nombre: ";
+    cout << "Nombre (Una palabra): ";
     cin >> name;
 
     do{
@@ -436,7 +436,7 @@ void addStock(Product inventory[], int numProducts){
     }
     
     do{
-        cout << "ID del producto";
+        cout << "ID del producto: ";
         cin >> id;
         if (id < 1 || id > numProducts)
         {
@@ -445,7 +445,7 @@ void addStock(Product inventory[], int numProducts){
     } while (id < 1 || id > numProducts);
     
     do{
-        cout << "Cantidad recibida; ";
+        cout << "Cantidad recibida: ";
         cin >> quantity;
         if (quantity <= 0)
         {
@@ -579,6 +579,7 @@ int main(){
                     cout << "4. Revisar stock" << endl;
                     cout << "5. Ingresar factura" << endl;
                     cout << "6. Volver al menu principal" << endl;
+                    cout << "Ingrese una opcion:" << endl;
                     cin >> optionProduct;
                     switch (optionProduct){
                         case 1:
