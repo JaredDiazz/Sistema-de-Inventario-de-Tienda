@@ -46,14 +46,22 @@ void guardarUsuarios(user newUser[], int totalusuarios) {
     archivo.close();
 }
 
+//Function to load default users
+void defaultUsers(user newUser[], int &totalusuarios) {
+    newUser[0] = {1, "admin", "1234", 1};
+    newUser[1] = {2, "Henry", "1234", 2};
+    newUser[2] = {3, "Jared", "1234", 2};
+    newUser[3] = {4, "Victor", "1234", 2};
+    totalusuarios = 4;
+}
+
 // Carga los usuarios desde el archivo cada vez que inicia el programa.
 //si el archivo no existe o esta vacio, inicializa el usuario base y lo guarda.
 void cargarUsuarios(user newUser[], int &totalusuarios) {
-    ifstream archivo("usuarios.txt");
+    ifstream archivo("users.txt");
 
     if (!archivo.is_open()) {
-        newUser[0] = {1, "Henry", "1325", 1};
-        totalusuarios = 1;
+        defaultUsers(newUser, totalusuarios);
         guardarUsuarios(newUser, totalusuarios);
         return;
     }
@@ -61,8 +69,7 @@ void cargarUsuarios(user newUser[], int &totalusuarios) {
     archivo >> totalusuarios;
 
     if (totalusuarios < 1) {
-        totalusuarios = 1;
-        newUser[0] = {1, "Henry", "1325", 1};
+        defaultUsers(newUser, totalusuarios);
         archivo.close();
         guardarUsuarios(newUser, totalusuarios);
         return;
