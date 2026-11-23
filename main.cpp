@@ -101,7 +101,6 @@ void registerUser(user newUser[], int &totalUsers) {
         }
     }
     
-
     cout << "Ingrese la contraseña: ";
     cin >> password;
     cout << "Ingrese el rol (1 = Admin, 2 = Vendedor): ";
@@ -453,14 +452,30 @@ int registerProduct(Product inventory[], int numProducts){
     return numProducts + 1;
 }
 
-void makeSale(Product inventory[], int numProducts){
+bool isExpired(Product product, int day, int month, int year){
+    if (product.yearExp < year)
+    {
+        return true;
+    }
+    if (product.yearExp == year && product.monthExp < month)
+    {
+        return true;
+    }
+    if (product.yearExp == year && product.monthExp == month && product.dayExp < day)
+    {
+        return true;
+    }
+    return false;
+}
+
+void makeSale(Product inventory[], int numProducts, int day, int month, int year){
     if  (numProducts == 0)
     {
         cout << "No hay productos para vender" << endl;
         return;
     }
 
-    int id, ix, quantity;
+    int id, index, quantity;
 
     cout << "=====REALIZAR VENTA=====" << endl;
     for (int i = 0; i < numProducts; i++)
@@ -468,43 +483,47 @@ void makeSale(Product inventory[], int numProducts){
         cout << inventory[i].idProduct << " " << inventory[i].product << " $" << inventory[i].price << " Stock: " << inventory[i].stock << endl;
     }
     
-    do
+     do
     {
-        cout << "ID: ";
-        cin >> id;
+        id = readInt("ID: ");
         if (id < 1 || id > numProducts)
         {
             cout << "ID incorrecto" << endl;
         }
     } while (id < 1 || id > numProducts);
-    
-    ix = id - 1;
+
+    index = id - 1;
+
+    if (isExpired(inventory[index], day, month, year))
+    {
+        cout << "No se puede vender: el producto " << inventory[index].product << " esta caducado" << endl;
+        return;
+    }
 
     do
     {
-        cout << "Cantidad: ";
-        cin >> quantity;
+        quantity = readInt("Cantidad: ");
         if (quantity <= 0)
         {
             cout << "La cantidad debe ser mayor a 0" << endl;
         }
     } while (quantity <= 0);
-    
-    if (quantity > inventory[ix].stock)
+
+    if (quantity > inventory[index].stock)
     {
-        cout << "Stock insuficiente. Disponible: " << inventory[ix].stock << endl;
+        cout << "Stock insuficiente. Disponible: " << inventory[index].stock << endl;
         return;
     }
-    
-    inventory[ix].stock = inventory[ix].stock - quantity;
-    inventory[ix].totalSales = inventory[ix].totalSales + quantity;
 
-    float total = quantity * inventory[ix].price;
+    inventory[index].stock = inventory[index].stock - quantity;
+    inventory[index].totalSales = inventory[index].totalSales + quantity;
+
+    float total = quantity * inventory[index].price;
     cout << "Venta realizada. Total: $" << total << endl;
 
-    if (inventory[ix].stock <= inventory[ix].minimumStock)
+    if (inventory[index].stock <= inventory[index].minimumStock)
     {
-        cout << "ALERTA: Quedan " << inventory[ix].stock << " unidades de " << inventory[ix].product << " (minimo: " << inventory[ix].minimumStock << ")" << endl; 
+        cout << "ALERTA: Quedan " << inventory[index].stock << " unidades de " << inventory[index].product << " (minimo: " << inventory[index].minimumStock << ")" << endl;
     }
 }
 
@@ -654,6 +673,10 @@ int main(){
     cout << "ID de usuario: " << users[userPosition].iduser << endl;
     cout << "Nombre de usuario: " << users[userPosition].username << endl;
 
+    int todayDay, todayMonth, todayYear;
+    cout << "Ingrese la fecha de hoy: " << endl;
+    askDate(todayDay, todayMonth, todayYear);
+
     //Menu - Victor
     do{
         cout <<"=====SISTEMA DE INVENTARIO=====" << endl;
@@ -725,7 +748,7 @@ int main(){
 
                     switch (optionSales){
                         case 1:
-                            makeSale(inventory, numProducts);
+                            makeSale(inventory, numProducts, todayDay, todayMonth, todayYear);
                             saveProducts(inventory, numProducts);
                             break;
                         case 2:
