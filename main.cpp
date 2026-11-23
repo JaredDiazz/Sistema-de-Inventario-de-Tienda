@@ -693,8 +693,7 @@ int main(){
             cout << "Error: rol de usuario no valido." << endl;
             return 1;
         }
-        cout <<"Ingrese una opcion:" << endl;
-        cin >> option;
+        option = readInt("Ingrese una opcion: ");
 
         switch (option){
             case 1:
@@ -707,8 +706,7 @@ int main(){
                     cout << "4. Revisar stock" << endl;
                     cout << "5. Ingresar factura" << endl;
                     cout << "6. Volver al menu principal" << endl;
-                    cout << "Ingrese una opcion:" << endl;
-                    cin >> optionProduct;
+                    optionProduct = readInt("Ingrese una opcion: ");
                     switch (optionProduct){
                         case 1:
                             numProducts = registerProduct(inventory, numProducts);
@@ -739,8 +737,7 @@ int main(){
                     cout <<"1.Realizar ventas" << endl;
                     cout <<"2.Ver inventario" << endl;
                     cout <<"3.Volver al menu principal" << endl;
-                    cout <<"Ingrese una opcion:" << endl;
-                    cin >> optionSales;
+                    optionSales = readInt("Ingrese una opcion: ");
 
                     switch (optionSales){
                         case 1:
