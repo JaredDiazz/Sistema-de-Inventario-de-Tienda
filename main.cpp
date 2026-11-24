@@ -247,7 +247,7 @@ void inventorySimulator(Product inventory[], int numProducts){
     }
 }
 //credits - victor osorio
-void mostrarCreditos(){
+void credits(){
     cout <<"===================================================" << endl;
     cout <<"---------------CREDITOS DEL PROYECTO---------------" << endl;
     cout <<"===================================================" << endl;
@@ -822,7 +822,7 @@ int main(){
                 cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
                 break;
             case 4:
-                mostrarCreditos();
+                credits();
                 break;
             case 5:
                 cout <<"Cerrando sesion..." << endl;
