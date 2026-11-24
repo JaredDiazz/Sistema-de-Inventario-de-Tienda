@@ -4,6 +4,7 @@
 using namespace std;
 
 //Structure for the users
+
 struct user{
     int idUser;
     string username;
@@ -182,6 +183,7 @@ void verUsuarios(user newUser[], int totalusuarios) {
 }
 
 //Simulator - Victor
+//Muestra si es necesario hacer un restock de un producto, por si esta cerca de vencer o por si hay poco producto.
 void inventorySimulator(Product inventory[], int numProducts){
     if (numProducts == 0)
     {
@@ -189,17 +191,11 @@ void inventorySimulator(Product inventory[], int numProducts){
         return;
     }
 
-    int actualDay, actualMonth, actualYear;
     cout << "Ingrese la fecha de hoy" << endl;
 
-    do{
-        cout << "Dia: ";
-        cin >> actualDay;
-        if (actualDay < 1 || actualDay > 31)
-        {
-            cout << "Dia invalido" << endl;
-        }
-    }while(actualDay < 1 || actualDay > 31);
+    int actualMonth = 11;
+    int actualYear = 2026;
+    int actualDay = 23;
 
     do{
         cout << "Mes: ";
@@ -252,7 +248,7 @@ void inventorySimulator(Product inventory[], int numProducts){
         cout <<"====================================================" << endl;
     }
 }
-
+//credits - victor osorio
 void mostrarCreditos(){
     cout <<"===================================================" << endl;
     cout <<"---------------CREDITOS DEL PROYECTO---------------" << endl;
@@ -781,6 +777,8 @@ int main(){
                 cout <<"acceso denegado: solo para administradores." << endl;
                 }
                 break;
+
+                //sell menu
             case 2:
                 do{
                     cout <<"=====Ventas=====" << endl;
@@ -800,6 +798,8 @@ int main(){
                     }
                 }while(optionSales !=3);
                 break;
+
+                // Technical support - Inventory System
             case 3:
                 cout <<"=========================================AYUDA========================================="<< endl;
                 cout <<"=======================================================================================" << endl;
