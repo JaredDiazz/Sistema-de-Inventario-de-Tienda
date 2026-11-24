@@ -190,12 +190,10 @@ void inventorySimulator(Product inventory[], int numProducts){
         cout << "No hay productos registrados" << endl;
         return;
     }
-
+   
+ int actualDay, actualMonth, actualYear;
     cout << "Ingrese la fecha de hoy" << endl;
 
-    int actualMonth = 11;
-    int actualYear = 2026;
-    int actualDay = 23;
 
     do{
         cout << "Mes: ";
