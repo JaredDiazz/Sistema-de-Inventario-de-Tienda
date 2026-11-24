@@ -27,7 +27,7 @@ struct Product{
 // Guarda todos los usuarios dentro del archivo usuarios.txt.
 // Recibe el arreglo de usuarios y la cantidad actual de registros validos.
 void guardarUsuarios(user newUser[], int totalusuarios) {
-    ofstream archivo("usuarios.txt");
+    ofstream archivo("users.txt");
 
     if (!archivo.is_open()) {
         cout << "No se pudo guardar el archivo de usuarios." << endl;
