@@ -296,22 +296,67 @@ void saveProducts(Product inventory[], int numProducts){
     archivo.close();
 }
 
+void loadDefaultProducts(Product inventory[]){
+    string names[50] = {
+        "Arroz", "Frijoles", "Azucar", "Sal", "Harina", "Aceite", "Pasta", "Avena", "Cereal", "Galletas",
+        "Pan", "Tortillas", "Leche", "Queso", "Crema", "Mantequilla", "Yogurt", "Huevos", "Jamon", "Salchicha",
+        "Pollo", "Carne", "Pescado", "Atun", "Sardina", "Manzana", "Banano", "Naranja", "Limon", "Tomate",
+        "Cebolla", "Papa", "Zanahoria", "Lechuga", "Aguacate", "Cafe", "Te", "Chocolate", "Mermelada", "Miel",
+        "Salsa", "Mayonesa", "Mostaza", "Jugo", "Refresco", "Agua", "Cerveza", "Papas", "Chicles", "Helado"
+    };
+
+    float prices[50] = {
+        1.25, 1.50, 0.90, 0.40, 0.85, 2.50, 1.10, 1.30, 2.75, 1.20,
+        0.75, 0.50, 1.15, 3.20, 1.80, 2.40, 0.95, 2.10, 2.60, 1.90,
+        4.50, 5.50, 3.80, 1.75, 1.00, 0.60, 0.35, 0.45, 0.30, 0.55,
+        0.40, 0.35, 0.50, 0.80, 1.25, 3.50, 1.60, 2.20, 2.00, 3.90,
+        1.35, 2.30, 1.45, 1.70, 1.25, 0.75, 1.50, 1.00, 0.50, 2.80
+    };
+
+    for (int i = 0; i < 50; i++){
+        inventory[i].idProduct = i + 1;
+        inventory[i].product = names[i];
+        inventory[i].price = prices[i];
+        inventory[i].minimumStock = 5 + i % 6;
+        inventory[i].stock = 15 + (i * 7) % 60;
+        inventory[i].totalSales = (i * 3) % 25;
+        inventory[i].dayExp = 1 + (i * 3) % 28;
+        inventory[i].monthExp = 1 + i % 12;
+        inventory[i].yearExp = 2027;
+
+        if (i % 10 == 0){
+            inventory[i].stock = inventory[i].minimumStock;
+        }
+        if (i % 17 == 0){
+            inventory[i].monthExp = 10;                      
+            inventory[i].yearExp = 2026;
+        }
+        if (i % 13 == 0){
+            inventory[i].dayExp = 27;               
+            inventory[i].monthExp = 11;
+            inventory[i].yearExp = 2026;
+        }
+    }
+}
+
 int loadProducts(Product inventory[]){
     ifstream archivo("products.txt");
     int total = 0;
 
     if (!archivo.is_open())
     {
-        return 0;
+        loadDefaultProducts(inventory);
+        saveProducts(inventory, 50);
+        return 50;
     }
-    
+
     archivo >> total;
 
     if (total > 100)
     {
         total = 100;
     }
-    
+
     for (int i = 0; i < total; i++)
     {
         archivo >> inventory[i].idProduct;
