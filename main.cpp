@@ -263,6 +263,30 @@ void credits(){
     cout <<"===================================================" << endl;
 }
 
+void help(){
+    cout <<"=========================================AYUDA========================================="<< endl;
+                cout <<"=======================================================================================" << endl;
+                cout <<"Producto: Al ingresar hacia el apartado producto podra" << endl;
+                cout <<"encontrar 5 opciones que son: " << endl;
+                cout <<"1. Registrar Inventario (Sirve para registrar los productos en el sistema)" << endl;
+                cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
+                cout <<"sobre los productso que estan en el inventario)." << endl;
+                cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
+                cout <<"el stock del producto)." << endl;
+                cout <<"4. Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
+                cout <<"5. Ingresar factura (aumenta el stock de un producto que ya existe)." << endl;
+                cout <<"6.Volver al menu principal (Regresa al menu principal)." << endl;
+                cout <<"=======================================================================================" << endl;
+                cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
+                cout <<"encontrar 3 opciones que son: " << endl;
+                cout <<"1.Realizar ventas (Permite al usuario realizar venta de productos)" << endl;
+                cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
+                cout <<"sobre los productso que estan en el inventario)" << endl;
+                cout <<"3. Volver Al Menu Principal (Regresa al menu principal)" << endl;
+                cout <<"=======================================================================================" << endl;
+                cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
+}
+
 void saveProducts(Product inventory[], int numProducts){
     ofstream archivo("products.txt");
 
@@ -799,27 +823,7 @@ int main(){
 
                 // Technical support - Inventory System
             case 3:
-                cout <<"=========================================AYUDA========================================="<< endl;
-                cout <<"=======================================================================================" << endl;
-                cout <<"Producto: Al ingresar hacia el apartado producto podra" << endl;
-                cout <<"encontrar 5 opciones que son: " << endl;
-                cout <<"1. Registrar Inventario (Sirve para registrar los productos en el sistema)" << endl;
-                cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
-                cout <<"sobre los productso que estan en el inventario)." << endl;
-                cout <<"3. Ver Simulador De Dias De Inventario (Avisa al usuario si es conveniente actualizar" << endl;
-                cout <<"el stock del producto)." << endl;
-                cout <<"4. Revisar Stock (Permite al usuario revisar el stock de cada producto)" << endl;
-                cout <<"5. Ingresar factura (aumenta el stock de un producto que ya existe)." << endl;
-                cout <<"6.Volver al menu principal (Regresa al menu principal)." << endl;
-                cout <<"=======================================================================================" << endl;
-                cout <<"Ventas: Al ingresar hacia el apartado producto podra" << endl;
-                cout <<"encontrar 3 opciones que son: " << endl;
-                cout <<"1.Realizar ventas (Permite al usuario realizar venta de productos)" << endl;
-                cout <<"2. Ver inventario (Sirve para poder supervizar y poder tomar control" << endl;
-                cout <<"sobre los productso que estan en el inventario)" << endl;
-                cout <<"3. Volver Al Menu Principal (Regresa al menu principal)" << endl;
-                cout <<"=======================================================================================" << endl;
-                cout <<"Cerrar sesion: El suario cierra sesion en el programa y termina turno" << endl;
+                help();
                 break;
             case 4:
                 credits();
